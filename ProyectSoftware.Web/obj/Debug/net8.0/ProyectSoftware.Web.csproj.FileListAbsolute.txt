@@ -1,0 +1,8 @@
+C:\Users\User\Documents\c#\ProyectoS\ProyectSoftware.Web\obj\Debug\net8.0\ProyectSoftware.Web.csproj.AssemblyReference.cache
+C:\Users\User\Documents\c#\ProyectoS\ProyectSoftware.Web\obj\Debug\net8.0\ProyectSoftware.Web.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Documents\c#\ProyectoS\ProyectSoftware.Web\obj\Debug\net8.0\ProyectSoftware.Web.AssemblyInfoInputs.cache
+C:\Users\User\Documents\c#\ProyectoS\ProyectSoftware.Web\obj\Debug\net8.0\ProyectSoftware.Web.AssemblyInfo.cs
+C:\Users\User\Documents\c#\ProyectoS\ProyectSoftware.Web\obj\Debug\net8.0\ProyectSoftware.Web.csproj.CoreCompileInputs.cache
+C:\Users\User\Documents\c#\ProyectoS\ProyectSoftware.Web\obj\Debug\net8.0\ProyectSoftware.Web.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\User\Documents\c#\ProyectoS\ProyectSoftware.Web\obj\Debug\net8.0\ProyectSoftware.Web.RazorAssemblyInfo.cache
+C:\Users\User\Documents\c#\ProyectoS\ProyectSoftware.Web\obj\Debug\net8.0\ProyectSoftware.Web.RazorAssemblyInfo.cs
