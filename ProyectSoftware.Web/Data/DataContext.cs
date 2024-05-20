@@ -23,6 +23,40 @@ namespace ProyectSoftware.Web.Data
             modelBuilder.Entity<HasSongUser>()
                     .HasKey(ab => new { ab.IdSong, ab.IdUser });
 
+
+            modelBuilder.Entity<HasSongGender>()
+                .HasOne(hsg => hsg.Song)
+                .WithMany(s => s.HasSongGender)
+                .HasForeignKey(hsg => hsg.IdSong);
+
+            modelBuilder.Entity<HasSongGender>()
+                .HasOne(hsg => hsg.GenderType)
+                .WithMany(gt => gt.HasSongGender)
+                .HasForeignKey(hsg => hsg.IdGender);
+
+            modelBuilder.Entity<HasSongPlaylist>()
+                .HasOne(hsg => hsg.Song)
+                .WithMany(s => s.HasSongPlaylist)
+                .HasForeignKey(hsg => hsg.IdSong);
+
+            modelBuilder.Entity<HasSongPlaylist>()
+                .HasOne(hsg => hsg.Playlist)
+                .WithMany(gt => gt.HasSongPlaylist)
+                .HasForeignKey(hsg => hsg.IdPlaylist);
+
+            modelBuilder.Entity<HasSongUser>()
+                .HasOne(hsg => hsg.Song)
+                .WithMany(s => s.HasSongUser)
+                .HasForeignKey(hsg => hsg.IdSong);
+
+            modelBuilder.Entity<HasSongUser>()
+                .HasOne(hsg => hsg.User)
+                .WithMany(gt => gt.HasSongUser)
+                .HasForeignKey(hsg => hsg.IdUser);
+
+
+           
+
             base.OnModelCreating(modelBuilder);
         }
 

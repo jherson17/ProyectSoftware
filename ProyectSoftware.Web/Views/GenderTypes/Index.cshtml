@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ProyectSoftware.Web.Data.Entities.GenderType>
+
+@{
+    ViewData["Title"] = "Index"; // Establece el título de la página.
+}
+@* //estan heredando de layaout *@
+<h1>Sections</h1>
+<!-- Enlace para dirigirse a la acción 'Create' del controlador -->
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <!--
+                Esta línea genera un encabezado de columna de una tabla para el nombre.
+                Html.DisplayNameFor(model => model.Name) utiliza la reflexión para obtener el nombre de la propiedad "Name" del modelo.
+                Esto permite mostrar el nombre legible de la propiedad, definido mediante DataAnnotations, en lugar del nombre exacto de la propiedad.
+            -->
+            <th>@Html.DisplayNameFor(model => model.GenderName)</th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.GenderName)</th>
+            </tr>
+        }
+    </tbody>
+</table>
