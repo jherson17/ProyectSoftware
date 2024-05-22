@@ -34,25 +34,14 @@ namespace ProyectSoftware.Web.Services
                     // Obtiene la lista de autores de la base de datos de manera asíncrona.
                     List<Author> list = await _context.Authors.ToListAsync();
 
-                    // Crea una respuesta exitosa con la lista obtenida.
-                    Response<List<Author>> response = new Response<List<Author>>
-                    {
-                        IsSuccess = true,
-                        Message = "Lista Obtenida",
-                        Result = list
-                    };
-
-                    return response;
-                }
+                // Crea una respuesta exitosa con la lista obtenida.
+                    return ResponseHelper<List<Author>>.MakeResponseSuccess(list, "Author created");
+            }
                 catch (Exception ex)
                 {
-                    // En caso de excepción, crea una respuesta de error con el mensaje de la excepción.
-                    return new Response<List<Author>>
-                    {
-                        IsSuccess = false,
-                        Message = ex.Message
-                    };
-                }
+                // En caso de excepción, crea una respuesta de error con el mensaje de la excepción.
+                return ResponseHelper<List<Author>>.MakeResponseSuccess(ex.Message);
+            }
             }
         public async Task<Response<Author>> CreateAsync(Author model)
         {

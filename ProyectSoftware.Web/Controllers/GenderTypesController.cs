@@ -4,8 +4,8 @@ using ProyectSoftware.Web.Data;
 using ProyectSoftware.Web.Services;
 using ProyectSoftware.Web.Core;
 using AspNetCoreHero.ToastNotification.Abstractions;
-using Humanizer;
-using Microsoft.AspNetCore.Mvc.Rendering;
+
+
 
 namespace ProyectSoftware.Web.Controllers
 {
@@ -67,5 +67,73 @@ namespace ProyectSoftware.Web.Controllers
             }
             return View();
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Edit([FromRoute] int id)
+        {
+            Response<GenderType> response = await _GenderTypeService.GetOneAsync(id);
+
+            if (response.IsSuccess)
+            {
+                return View(response.Result);
+            }
+
+            _notify.Error(response.Errors.First());
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(GenderType model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    _notify.Error("Debe ajustar los errores de validación.");
+                    return View(model);
+                }
+                
+                Response<GenderType> response = await _GenderTypeService.EditAsync(model);
+
+                if (response.IsSuccess)
+                {
+                    _notify.Success(response.Message);
+                    return RedirectToAction(nameof(Index));
+                }
+
+                _notify.Error(response.Errors.First());
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _notify.Error(ex.Message);
+                return View(model);
+            }
+        }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            Response<GenderType> response = await _GenderTypeService.DeleteAsync(id);
+
+            if (response.IsSuccess)
+            {
+                _notify.Success(response.Message);
+                return RedirectToAction(nameof(Index));
+            }
+
+            _notify.Error(response.Errors.First());
+            return RedirectToAction(nameof(Index));
+        }
+
+        //[HttpPost]
+        //public async Task<IActionResult> Toggle(int Id, bool Hide)
+        //{
+        //    ToggleSectionRequest request = new ToggleSectionRequest { Id = Id, Hide = Hide };
+        //    Response<Section> response = await _sectionsService.ToggleSectionAsync(request);
+
+        //    _notify.Success("Sección actualizada con éxito");
+
+        //    return RedirectToAction(nameof(Index));
+        //}
     }
 }

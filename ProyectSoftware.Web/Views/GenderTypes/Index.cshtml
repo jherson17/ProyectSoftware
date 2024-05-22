@@ -38,8 +38,18 @@
                     @foreach (var item in Model)
                     {
                         <tr class="table-secondary">
-                            <th>@Html.DisplayNameFor(model => model.GenderName)</th>
+                            <td>@Html.DisplayNameFor(model => model.GenderName)</td>
+                                <td>
+                                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-fill"></i></a>
+                                    @*  esta llamando a delete de controller *@
+                                    <form asp-action="Delete" asp-route-id="@item.Id" style="display:contents">
+                                        <button  asp-action="Delete"
+                                        asp-route-id="@item.Id" class="btn btn-sm btn-danger btnDelete"><i class="bi bi-trash"></i></button>
+                                   </form>
+                              </td>
                         </tr>
+                        
+
                     }
                 </tbody>
             </table>
@@ -47,3 +57,35 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script>
+        // Función que se ejecuta cuando el documento HTML ha sido completamente cargado
+        $(document).ready(function() {
+            // Selecciona todos los elementos con la clase 'btnDelete' y define un evento 'click' para ellos
+            $('.btnDelete').click(function(event) {
+                // Evita el comportamiento predeterminado del botón (enviar el formulario)
+                event.preventDefault();
+                // Muestra un cuadro de diálogo de confirmación utilizando SweetAlert2
+                Swal.fire({
+                    title: "¿Desea eliminar el GenderType?",
+                    text: "No prodrá revertirlo",
+                    icon: "question",
+                    showCancelButton: true,
+                }).then((result) => {// Si el usuario confirma la eliminación
+                        
+                    if (result.isConfirmed) {
+                        // Encuentra el formulario más cercano al botón de eliminación y lo envía
+                        const form = $(this).closest('form');
+
+                        form.submit();// Envía el formulario. Si el usuario confirmó la eliminación, el formulario se envía y el autor se eliminará del servidor.
+                    }
+
+                });
+            
+            });
+
+        });
+            
+    </script>
+}

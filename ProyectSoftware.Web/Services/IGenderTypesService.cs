@@ -3,6 +3,8 @@ using ProyectSoftware.Web.Data;
 using ProyectSoftware.Web.Core;
 using Microsoft.EntityFrameworkCore;
 using ProyectSoftware.Web.Helpers;
+using static System.Collections.Specialized.BitVector32;
+using System.Collections.Generic;
 
 namespace ProyectSoftware.Web.Services
 {
@@ -11,6 +13,13 @@ namespace ProyectSoftware.Web.Services
     {
         Task<Response<GenderType>> CreateAsync(GenderType model);
         public Task<Response<List<GenderType>>> GetListAsync();
+        public Task<Response<GenderType>> GetOneAsync(int id);
+
+        public Task<Response<GenderType>> EditAsync(GenderType model);
+
+        public Task<Response<GenderType>> DeleteAsync(int id);
+
+        //public Task<Response<GenderType>> ToggleGenderTypeAsync(ToggleGenderTypeRequest request);
     }
 
 
@@ -64,6 +73,94 @@ namespace ProyectSoftware.Web.Services
             }
         }
 
-      
+        public async Task<Response<GenderType>> GetOneAsync(int id)
+        {
+            try
+            {
+                GenderType? genderType = await _context.GenderTypes.FirstOrDefaultAsync(s => s.Id == id);
+                if (genderType is null)
+                {
+                    return ResponseHelper<GenderType>.MakeResponseFail($"La sección con id '{id}' no existe.");
+                }
+                return ResponseHelper<GenderType>.MakeResponseSuccess(genderType);
+
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper<GenderType>.MakeResponseFail(ex);
+            }
+
+
+        }
+
+        public async Task<Response<GenderType>> EditAsync(GenderType model)
+        {
+            try
+            {
+                _context.GenderTypes.Update(model);
+                await _context.SaveChangesAsync();
+
+                return ResponseHelper<GenderType>.MakeResponseSuccess(model, "Sección editada con éxito");
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper<GenderType>.MakeResponseFail(ex);
+            }
+        }
+
+        public async Task<Response<GenderType>> DeleteAsync(int id)
+        {
+            try
+            {
+                GenderType? genderType = await _context.GenderTypes.FirstOrDefaultAsync(s => s.Id == id);
+
+                if (genderType is null)
+                {
+                    return ResponseHelper<GenderType>.MakeResponseFail($"La sección con id '{id}' no existe.");
+                };
+                _context.GenderTypes.Remove(genderType);
+                await _context.SaveChangesAsync();
+
+                return ResponseHelper<GenderType>.MakeResponseSuccess("Sección eliminada con éxito");
+
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper<GenderType>.MakeResponseFail(ex);
+            }
+        }
+
+        
+        //public async Task<Response<GenderType>> ToggleGenderTypeAsync(ToggleGenderTypeRequest request)
+        //{
+        //    try
+        //    {
+        //        GenderType? model = await _context.GenderTypes.FindAsync(request.Id);
+
+        //        if (model == null)
+        //        {
+        //            return ResponseHelper<GenderType>.MakeResponseFail($"No existe seeción con id '{request.Id}'");
+        //        }
+
+
+
+
+        //        _context.GenderTypes.Update(model);
+        //        await _context.SaveChangesAsync();
+
+        //        return ResponseHelper<GenderType>.MakeResponseSuccess("Sección Actualizada con éxito");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ResponseHelper<GenderType>.MakeResponseFail(ex);
+        //    }
+
+        //}
+
     }
+
+
 }
+      
+    
+
