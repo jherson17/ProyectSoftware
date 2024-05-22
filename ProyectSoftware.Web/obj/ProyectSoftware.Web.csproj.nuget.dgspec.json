@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Documents\\c#\\ProyectoS\\ProyectSoftware.Web\\ProyectSoftware.Web.csproj": {}
+    "C:\\proyect\\ProyectSoftware\\ProyectSoftware.Web\\ProyectSoftware.Web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Documents\\c#\\ProyectoS\\ProyectSoftware.Web\\ProyectSoftware.Web.csproj": {
+    "C:\\proyect\\ProyectSoftware\\ProyectSoftware.Web\\ProyectSoftware.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Documents\\c#\\ProyectoS\\ProyectSoftware.Web\\ProyectSoftware.Web.csproj",
+        "projectUniqueName": "C:\\proyect\\ProyectSoftware\\ProyectSoftware.Web\\ProyectSoftware.Web.csproj",
         "projectName": "ProyectSoftware.Web",
-        "projectPath": "C:\\Users\\User\\Documents\\c#\\ProyectoS\\ProyectSoftware.Web\\ProyectSoftware.Web.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Documents\\c#\\ProyectoS\\ProyectSoftware.Web\\obj\\",
+        "projectPath": "C:\\proyect\\ProyectSoftware\\ProyectSoftware.Web\\ProyectSoftware.Web.csproj",
+        "packagesPath": "C:\\Users\\nelso\\.nuget\\packages\\",
+        "outputPath": "C:\\proyect\\ProyectSoftware\\ProyectSoftware.Web\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\nelso\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -47,17 +51,17 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.0.5, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.0.5, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.0.5, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
@@ -83,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

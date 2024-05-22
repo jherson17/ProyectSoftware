@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProyectSoftware.Web.Data.Entities;
+using ProyectSoftware.Web.Models;
 
 namespace ProyectSoftware.Web.Data
 {

@@ -1,0 +1,45 @@
+﻿@model List<ProyectSoftware.Web.Data.Entities.Playlist>
+
+<h2>Playlists</h2>
+
+<p>
+    <a class="btn btn-success" asp-action="Create" asp-controller="Playlist">Create New Playlist</a>
+    <a class="btn btn-secondary" asp-action="Index" asp-controller="Home">Back to Home</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Cantidad
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var playlist in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => playlist.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => playlist.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => playlist.Cantidad)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@playlist.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@playlist.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
