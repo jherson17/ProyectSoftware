@@ -1,0 +1,31 @@
+﻿@model ProyectSoftware.Web.DTOs.AuthorDTO
+
+<h2>Author Details</h2>
+
+<div>
+    <h4>Author Information</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Stage Name:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StageName)
+        </dd>
+        <dt class="col-sm-2">
+            Name:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Last Name:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

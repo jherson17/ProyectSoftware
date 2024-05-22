@@ -11,33 +11,42 @@ using ProyectSoftware.Web.Data;
 namespace ProyectSoftware.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240519193419_CreateDb")]
-    partial class CreateDb
+    [Migration("20240522160441_CreateAuthorTable")]
+    partial class CreateAuthorTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.Author", b =>
                 {
-                    b.Property<string>("StageName")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("StageName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("StageName");
+                    b.HasKey("Id");
 
                     b.ToTable("Authors");
                 });
@@ -160,8 +169,8 @@ namespace ProyectSoftware.Web.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AuthorStageName")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -176,7 +185,7 @@ namespace ProyectSoftware.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthorStageName");
+                    b.HasIndex("AuthorId");
 
                     b.ToTable("Songs");
                 });
@@ -269,10 +278,17 @@ namespace ProyectSoftware.Web.Migrations
             modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.Song", b =>
                 {
                     b.HasOne("ProyectSoftware.Web.Data.Entities.Author", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorStageName");
+                        .WithMany("Songs")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.Author", b =>
+                {
+                    b.Navigation("Songs");
                 });
 
             modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.GenderType", b =>
