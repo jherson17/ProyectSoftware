@@ -27,7 +27,7 @@
                 <div class="col-md-12">
                     <div class="form-floating">
                         <input asp-for="GenderName" class="form-control"  placeholder="@Html.DisplayFor(model => model.GenderName)">
-                        <label>@(Html.DisplayFor(model => model.GenderName)) GenderName</label>
+                        <label>@(Html.DisplayNameFor(model => model.GenderName)) GenderName</label>
                         <span asp-validation-for="GenderName" class="Text-Danger"></span>
                     </div>
                 </div>
@@ -42,8 +42,8 @@
     </div>
 </section>
 
-@section Scripts{
+@* @section Scripts{
     @{
         await Html.RenderPartialAsync("_ValidationSriptsPartial");
     }
-}
+} *@

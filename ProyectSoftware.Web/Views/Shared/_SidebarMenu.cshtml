@@ -2,16 +2,22 @@
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
+        @* se utiliza para determinar si una sección de la interfaz de usuario debe estar colapsada o no, dependiendo de la ruta actual (controlador y acción) *@
         <li class="nav-item">
-            <a class="nav-link " href="index.html">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Home"
+               && ViewContext.RouteData.Values["Action"].ToString() == "Dashboard"
+               ? "" : "collapsed")" asp-action="Dashboard" asp-controller="Home">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
+
         </li><!-- End Dashboard Nav -->
 
         <li class="nav-item">
             <!-- creando una conexcion con author-->
-            <a class="nav-link collapsed" asp-controller="Authors" asp-action="Index">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Auhors"
+               && ViewContext.RouteData.Values["Action"].ToString() == "Index"
+               ? "" : "collapsed")" asp-controller="Authors" asp-action="Index">
                 <i class="bi bi-grid"></i>
                 <span>Author</span>
             </a>
@@ -19,7 +25,9 @@
 
         <li class="nav-item">
             <!-- creando una conexcion con author-->
-            <a class="nav-link collapsed" asp-controller="GenderTypes" asp-action="Index">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "GenderTypes"
+               && ViewContext.RouteData.Values["Action"].ToString() == "Index"
+               ? "" : "collapsed")" asp-controller="GenderTypes" asp-action="Index">
                 <i class="bi bi-grid"></i>
                 <span>GenderType</span>
             </a>
@@ -27,7 +35,9 @@
 
         <li class="nav-item">
             <!-- creando una conexcion con author-->
-            <a class="nav-link collapsed" asp-controller="Users" asp-action="Index">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Users"
+               && ViewContext.RouteData.Values["Action"].ToString() == "Index"
+               ? "" : "collapsed")" asp-controller="Users" asp-action="Index">
                 <i class="bi bi-grid"></i>
                 <span>User</span>
             </a>
