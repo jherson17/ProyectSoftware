@@ -13,6 +13,12 @@ namespace ProyectSoftware.Web.Services
         Task<Response<User>> CreateAsync(User model);
         
         public Task<Response<List<User>>> GetListAsync();
+
+        public Task<Response<User>> GetOneAsync(string name);
+
+        public Task<Response<User>> EditAsync(User model);
+
+        public Task<Response<User>> DeleteAsync(string name);
     }
 
 
@@ -67,6 +73,61 @@ namespace ProyectSoftware.Web.Services
                 return ResponseHelper<List<User>>.MakeResponseSuccess(ex.Message);
             }
         }
+        public async Task<Response<User>> GetOneAsync(string name)
+        {
+            try
+            {
+                User? user = await _context.Users.FirstOrDefaultAsync(s => s.Name == name);
+                if (user is null)
+                {
+                    return ResponseHelper<User>.MakeResponseFail($"La sección con id '{name}' no existe.");
+                }
+                return ResponseHelper<User>.MakeResponseSuccess(user);
 
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper<User>.MakeResponseFail(ex);
+            }
+
+
+        }
+
+        public async Task<Response<User>> EditAsync(User model)
+        {
+            try
+            {
+                _context.Users.Update(model);
+                await _context.SaveChangesAsync();
+
+                return ResponseHelper<User>.MakeResponseSuccess(model, "Sección editada con éxito");
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper<User>.MakeResponseFail(ex);
+            }
+        }
+
+        public async Task<Response<User>> DeleteAsync(string name)
+        {
+            try
+            {
+                User? user = await _context.Users.FirstOrDefaultAsync(s => s.Name == name);
+
+                if (user is null)
+                {
+                    return ResponseHelper<User>.MakeResponseFail($"La sección con name '{name}' no existe.");
+                };
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+
+                return ResponseHelper<User>.MakeResponseSuccess("Sección eliminada con éxito");
+
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper<User>.MakeResponseFail(ex);
+            }
+        }
     }
 }

@@ -70,5 +70,62 @@ namespace ProyectSoftware.Web.Controllers
             }
             return View();
         }
+        [HttpGet("editstagename/{StageName}")]
+        public async Task<IActionResult> Edit([FromRoute] string StageName)
+        {
+            Response<Author> response = await _AuthorService.GetOneAsync(StageName);
+
+            if (response.IsSuccess)
+            {
+                return View(response.Result);
+            }
+
+            _notify.Error(response.Errors.First());
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(Author model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    _notify.Error("Debe ajustar los errores de validación.");
+                    return View(model);
+                }
+
+                Response<Author> response = await _AuthorService.EditAsync(model);
+
+                if (response.IsSuccess)
+                {
+                    _notify.Success(response.Message);
+                    return RedirectToAction(nameof(Index));
+                }
+
+                _notify.Error(response.Errors.First());
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _notify.Error(ex.Message);
+                return View(model);
+            }
+        }
+
+        [HttpPost("deletebystagename/{StageName}")]//Cada httpos me toco cambiar la ruta preguntar al profe porque
+        public async Task<IActionResult> Delete([FromRoute] string StageName)
+        {
+            Response<Author> response = await _AuthorService.DeleteAsync(StageName);
+
+            if (response.IsSuccess)
+            {
+                _notify.Success(response.Message);
+                return RedirectToAction(nameof(Index));
+            }
+
+            _notify.Error(response.Errors.First());
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

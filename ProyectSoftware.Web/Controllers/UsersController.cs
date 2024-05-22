@@ -70,5 +70,62 @@ namespace ProyectSoftware.Web.Controllers
             }
             return View();
         }
+        [HttpGet("edit/{Name}")]
+        public async Task<IActionResult> Edit([FromRoute] string Name)
+        {
+            Response<User> response = await _UserService.GetOneAsync(Name);
+
+            if (response.IsSuccess)
+            {
+                return View(response.Result);
+            }
+
+            _notify.Error(response.Errors.First());
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(User model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    _notify.Error("Debe ajustar los errores de validación.");
+                    return View(model);
+                }
+
+                Response<User> response = await _UserService.EditAsync(model);
+
+                if (response.IsSuccess)
+                {
+                    _notify.Success(response.Message);
+                    return RedirectToAction(nameof(Index));
+                }
+
+                _notify.Error(response.Errors.First());
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _notify.Error(ex.Message);
+                return View(model);
+            }
+        }
+
+        [HttpPost("elete/{Name}")]
+        public async Task<IActionResult> Delete([FromRoute] string Name)
+        {
+            Response<User> response = await _UserService.DeleteAsync(Name);
+
+            if (response.IsSuccess)
+            {
+                _notify.Success(response.Message);
+                return RedirectToAction(nameof(Index));
+            }
+
+            _notify.Error(response.Errors.First());
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

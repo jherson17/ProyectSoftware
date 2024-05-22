@@ -12,7 +12,13 @@ namespace ProyectSoftware.Web.Services
         {
         Task<Response<Author>> CreateAsync(Author model);
         public Task<Response<List<Author>>> GetListAsyc();
-        }
+        public Task<Response<Author>> GetOneAsync(string stagename);
+
+        public Task<Response<Author>> EditAsync(Author model);
+
+        public Task<Response<Author>> DeleteAsync(string stagename);
+
+    }
 
 
         // Implementación del servicio de Sections.
@@ -80,6 +86,62 @@ namespace ProyectSoftware.Web.Services
             {
                 // En caso de excepción, crea una respuesta de error con el mensaje de la excepción.
                 return ResponseHelper<List<Author>>.MakeResponseSuccess(ex.Message);
+            }
+        }
+        public async Task<Response<Author>> GetOneAsync(string stagename)
+        {
+            try
+            {
+                Author? author = await _context.Authors.FirstOrDefaultAsync(s => s.StageName == stagename);
+                if (author is null)
+                {
+                    return ResponseHelper<Author>.MakeResponseFail($"La sección con StageName '{stagename}' no existe.");
+                }
+                return ResponseHelper<Author>.MakeResponseSuccess(author);
+
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper<Author>.MakeResponseFail(ex);
+            }
+
+
+        }
+
+        public async Task<Response<Author>> EditAsync(Author model)
+        {
+            try
+            {
+                _context.Authors.Update(model);
+                await _context.SaveChangesAsync();
+
+                return ResponseHelper<Author>.MakeResponseSuccess(model, "Author editada con éxito");
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper<Author>.MakeResponseFail(ex);
+            }
+        }
+
+        public async Task<Response<Author>> DeleteAsync(string stagename)
+        {
+            try
+            {
+                Author? author = await _context.Authors.FirstOrDefaultAsync(s => s.StageName == stagename);
+
+                if (author is null)
+                {
+                    return ResponseHelper<Author>.MakeResponseFail($"La sección con id '{stagename}' no existe.");
+                };
+                _context.Authors.Remove(author);
+                await _context.SaveChangesAsync();
+
+                return ResponseHelper<Author>.MakeResponseSuccess("Sección eliminada con éxito");
+
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper<Author>.MakeResponseFail(ex);
             }
         }
 
