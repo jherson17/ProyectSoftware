@@ -2,6 +2,7 @@
 using ProyectSoftware.Web.Data;
 using ProyectSoftware.Web.Core;
 using Microsoft.EntityFrameworkCore;
+using ProyectSoftware.Web.Helpers;
 
 namespace ProyectSoftware.Web.Services
 {
@@ -40,21 +41,12 @@ namespace ProyectSoftware.Web.Services
                 await _context.AddAsync(user);
                 await _context.SaveChangesAsync();
 
-                return new Response<User>
-                {
-                    IsSuccess = true,
-                    Message = "User created",
-                    Result = user
-                };
+                return ResponseHelper<User>.MakeResponseSuccess(user, "User created");
             }
             catch (Exception ex)
             {
 
-                return new Response<User>
-                {
-                    IsSuccess = false,
-                    Message = ex.Message
-                };
+                return ResponseHelper<User>.MakeResponseSuccess(ex.Message);
             }
         }
 
@@ -67,23 +59,12 @@ namespace ProyectSoftware.Web.Services
                 List<User> list = await _context.Users.ToListAsync();
 
                 // Crea una respuesta exitosa con la lista obtenida.
-                Response<List<User>> response = new Response<List<User>>
-                {
-                    IsSuccess = true,
-                    Message = "Lista Obtenida",
-                    Result = list
-                };
-
-                return response;
+                return ResponseHelper<List<User>>.MakeResponseSuccess(list, "User created");
             }
             catch (Exception ex)
             {
                 // En caso de excepción, crea una respuesta de error con el mensaje de la excepción.
-                return new Response<List<User>>
-                {
-                    IsSuccess = false,
-                    Message = ex.Message
-                };
+                return ResponseHelper<List<User>>.MakeResponseSuccess(ex.Message);
             }
         }
 

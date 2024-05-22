@@ -2,6 +2,7 @@
 using ProyectSoftware.Web.Core;
 using ProyectSoftware.Web.Data;
 using ProyectSoftware.Web.Data.Entities;
+using ProyectSoftware.Web.Helpers;
 using static System.Collections.Specialized.BitVector32;
 
 namespace ProyectSoftware.Web.Services
@@ -66,50 +67,30 @@ namespace ProyectSoftware.Web.Services
                 await _context.AddAsync(author);
                 await _context.SaveChangesAsync();
 
-                return new Response<Author>
-                {
-                    IsSuccess = true,
-                    Message = "User created",
-                    Result = author
-                };
+                return ResponseHelper<Author>.MakeResponseSuccess(author, "Gender name created");
             }
             catch (Exception ex)
             {
 
-                return new Response<Author>
-                {
-                    IsSuccess = false,
-                    Message = ex.Message
-                };
+                return ResponseHelper<Author>.MakeResponseSuccess(ex.Message);
             }
         }
 
         // Implementación del método para obtener la lista de Sections de manera asíncrona.
-        public async Task<Response<List<User>>> GetListAsync()
+        public async Task<Response<List<Author>>> GetListAsync()
         {
             try
             {
                 // Obtiene la lista de autores de la base de datos de manera asíncrona.
-                List<User> list = await _context.Users.ToListAsync();
+                List<Author> list = await _context.Authors.ToListAsync();
 
                 // Crea una respuesta exitosa con la lista obtenida.
-                Response<List<User>> response = new Response<List<User>>
-                {
-                    IsSuccess = true,
-                    Message = "Lista Obtenida",
-                    Result = list
-                };
-
-                return response;
+                return ResponseHelper<List<Author>>.MakeResponseSuccess(list, "Author created");
             }
             catch (Exception ex)
             {
                 // En caso de excepción, crea una respuesta de error con el mensaje de la excepción.
-                return new Response<List<User>>
-                {
-                    IsSuccess = false,
-                    Message = ex.Message
-                };
+                return ResponseHelper<List<Author>>.MakeResponseSuccess(ex.Message);
             }
         }
 

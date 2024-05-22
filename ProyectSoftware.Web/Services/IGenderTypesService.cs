@@ -2,6 +2,7 @@
 using ProyectSoftware.Web.Data;
 using ProyectSoftware.Web.Core;
 using Microsoft.EntityFrameworkCore;
+using ProyectSoftware.Web.Helpers;
 
 namespace ProyectSoftware.Web.Services
 {
@@ -35,19 +36,11 @@ namespace ProyectSoftware.Web.Services
                 await _context.AddAsync(genderType);
                 await _context.SaveChangesAsync();
 
-                return new Response<GenderType>
-                {
-                    IsSuccess = true,
-                    Message = "Gender type created",
-                    Result = genderType
-                };
+                return ResponseHelper<GenderType>.MakeResponseSuccess(genderType, "Gender name created");
+               
             }catch(Exception ex){
 
-                return new Response<GenderType>
-                {
-                    IsSuccess = false,
-                    Message = ex.Message
-                };
+                return ResponseHelper<GenderType>.MakeResponseSuccess(ex.Message);
             }
         }
 
@@ -60,23 +53,14 @@ namespace ProyectSoftware.Web.Services
                 List<GenderType> list = await _context.GenderTypes.ToListAsync();
 
                 // Crea una respuesta exitosa con la lista obtenida.
-                Response<List<GenderType>> response = new Response<List<GenderType>>
-                {
-                    IsSuccess = true,
-                    Message = "Lista Obtenida",
-                    Result = list
-                };
+                return ResponseHelper<List<GenderType>>.MakeResponseSuccess(list, "Gender name created");
 
-                return response;
+               
             }
             catch (Exception ex)
             {
                 // En caso de excepción, crea una respuesta de error con el mensaje de la excepción.
-                return new Response<List<GenderType>>
-                {
-                    IsSuccess = false,
-                    Message = ex.Message
-                };
+                return ResponseHelper<List<GenderType>>.MakeResponseSuccess(ex.Message);
             }
         }
 
