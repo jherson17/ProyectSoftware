@@ -18,6 +18,6 @@ namespace ProyectSoftware.Web.Data.Entities
         public int Cantidad { get; set;}
         [Required(ErrorMessage = "El campo '{0}' es requerido.")]
         [MaxLength(64, ErrorMessage = "El campo '{0}' debe terner máximo {1} caractéres")]
-        public List<HasSongPlaylist> HasSongPlaylist { get; set; }
+        public List<HasSongPlaylist> HasSongPlaylists { get; set; }
     }
 }

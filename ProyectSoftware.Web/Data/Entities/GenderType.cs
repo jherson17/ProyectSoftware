@@ -16,6 +16,6 @@ namespace ProyectSoftware.Web.Data.Entities
         public string GenderName { get; set; }
         [Required(ErrorMessage = "El campo '{0}' es requerido.")]
         [MaxLength(64, ErrorMessage = "El campo '{0}' debe terner máximo {1} caractéres")]
-        public List<HasSongGender> HasSongGender { get; set; }
+        public List<HasSongGender> HasSongGenders { get; set; }
     }
 }

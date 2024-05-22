@@ -14,7 +14,6 @@ namespace ProyectSoftware.Web.Data.Seeders
         public async Task SeedAsync()
         {
             await new AurthorSeeder(_context).SeedAsync();
-            await new UserSeeder(_context).SeedAsync();
             await new GenderTypeSeeder(_context).SeedAsync();
         }
     }
