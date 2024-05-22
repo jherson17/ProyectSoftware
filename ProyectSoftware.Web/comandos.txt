@@ -1,0 +1,2 @@
+ctrl A selecciona todo el codigo
+ctrl h para seleccionar todas las palabras iguales y cambiarlas
