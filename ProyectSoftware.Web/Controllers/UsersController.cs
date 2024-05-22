@@ -7,15 +7,16 @@ using Microsoft.EntityFrameworkCore;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Identity;
 
+
 namespace ProyectSoftware.Web.Controllers
 {
     public class UsersController : Controller
     {
         private readonly DataContext _context;
-        private readonly IUsersService _UserService;
+        private readonly IUsersServices _UserService;
         private readonly INotyfService _notify;
 
-        public UsersController(DataContext context, IUsersService UserService, INotyfService notify)
+        public UsersController(DataContext context, IUsersServices UserService, INotyfService notify)
         {
             _context = context;
             _UserService = UserService; // Asigna el servicio de autores recibido al campo privado.
@@ -28,14 +29,45 @@ namespace ProyectSoftware.Web.Controllers
         {
             // Obtiene la lista de autores de forma asincrónica desde el servicio de autores.
             
-            Response<List<User>> response = await _UserService.GetListAsyc();
+            Response<List<User>> response = await _UserService.GetListAsync();
 
             // Devuelve una vista pasando la lista de autores como modelo.
             return View(response.Result);
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(User model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    // Si hay errores de validación, vuelve a cargar la vista de creación con los datos y mensajes de error.
+                    _notify.Error("Bebe ajustar los errores de validacion");
+                    return View(model);
+                }//esta sucediendo un error aqui y no se porque
+
+                Response<User> Response = await _UserService.CreateAsync(model);
+
+                if (Response.IsSuccess)
+                {
+                    _notify.Success(Response.Message);
+                    return RedirectToAction(nameof(Index));
+
+                }
+
+                _notify.Error(Response.Message);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _notify.Error(ex.Message);
+            }
             return View();
         }
     }

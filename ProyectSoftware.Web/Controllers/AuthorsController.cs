@@ -38,5 +38,37 @@ namespace ProyectSoftware.Web.Controllers
         {
             return View();
         }
+        [HttpGet]
+        
+        [HttpPost]
+        public async Task<IActionResult> Create(Author model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    // Si hay errores de validación, vuelve a cargar la vista de creación con los datos y mensajes de error.
+                    _notify.Error("Bebe ajustar los errores de validacion");
+                    return View(model);
+                }//esta sucediendo un error aqui y no se porque
+
+                Response<Author> Response = await _AuthorService.CreateAsync(model);
+
+                if (Response.IsSuccess)
+                {
+                    _notify.Success(Response.Message);
+                    return RedirectToAction(nameof(Index));
+
+                }
+
+                _notify.Error(Response.Message);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _notify.Error(ex.Message);
+            }
+            return View();
+        }
     }
 }

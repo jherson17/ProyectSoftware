@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AspNetCoreHero.ToastNotification;
+using Microsoft.EntityFrameworkCore;
 using ProyectSoftware.Web.Data;
 using ProyectSoftware.Web.Services;
-using static ProyectSoftware.Web.Services.IAuthorsService;
 
 namespace ProyectSoftware.Web
 {
@@ -17,12 +17,20 @@ namespace ProyectSoftware.Web
             });
             AddServices(builder);
 
+
+            builder.Services.AddNotyf(config =>
+            {
+                config.DurationInSeconds = 10; // Configura la duración de las notificaciones a 10 segundos.
+                config.IsDismissable = true; // Permite que las notificaciones sean descartables por el usuario.
+                config.Position = NotyfPosition.BottomRight; // Configura la posición de las notificaciones en la esquina inferior derecha.
+            });
+
             return builder;
         }
         private static void AddServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddScoped<IAuthorsService, AuthorServices>();
-            builder.Services.AddScoped<IUsersService, UserServices>();
+            builder.Services.AddScoped<IUsersServices, UserServices>();
             builder.Services.AddScoped<IGenderTypesService, GenderTypeServices>();
 
             //helpers

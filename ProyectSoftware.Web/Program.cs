@@ -1,3 +1,4 @@
+using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.EntityFrameworkCore;
 using ProyectSoftware.Web;
 using ProyectSoftware.Web.Data;
@@ -32,5 +33,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Dashboard}/{id?}");
+
+app.UseNotyf();
 
 app.Run();

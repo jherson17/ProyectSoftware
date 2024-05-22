@@ -8,7 +8,8 @@ namespace ProyectSoftware.Web.Services
 
     public interface IGenderTypesService
     {
-        public Task<Response<List<GenderType>>> GetListAsyc();
+        Task<Response<GenderType>> CreateAsync(GenderType model);
+        public Task<Response<List<GenderType>>> GetListAsync();
     }
 
 
@@ -23,8 +24,35 @@ namespace ProyectSoftware.Web.Services
             _context = context;
         }
 
+        public async Task<Response<GenderType>> CreateAsync(GenderType model)
+        {
+            try
+            {
+                GenderType genderType = new GenderType()
+                {
+                    GenderName = model.GenderName,
+                };
+                await _context.AddAsync(genderType);
+                await _context.SaveChangesAsync();
+
+                return new Response<GenderType>
+                {
+                    IsSuccess = true,
+                    Message = "Gender type created",
+                    Result = genderType
+                };
+            }catch(Exception ex){
+
+                return new Response<GenderType>
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
+
         // Implementación del método para obtener la lista de Sections de manera asíncrona.
-        public async Task<Response<List<GenderType>>> GetListAsyc()
+        public async Task<Response<List<GenderType>>> GetListAsync()
         {
             try
             {
@@ -51,5 +79,7 @@ namespace ProyectSoftware.Web.Services
                 };
             }
         }
+
+      
     }
 }
