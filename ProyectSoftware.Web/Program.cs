@@ -34,6 +34,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Dashboard}/{id?}");
 
-app.UseNotyf();
+
 
 app.Run();
