@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProyectSoftware.Web.Data.Entities;
+using static System.Collections.Specialized.BitVector32;
 
 namespace ProyectSoftware.Web.Data
 {
@@ -55,12 +56,20 @@ namespace ProyectSoftware.Web.Data
                 .HasForeignKey(hsg => hsg.IdUser);
 
 
-           
+                ConfigureIndexes(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
         }
 
-            public DbSet<Author> Authors { get; set; }
+      
+        private void ConfigureIndexes(ModelBuilder modelBuilder)//index es una retriccion que tendra mi tabla de base de datos
+        {
+            // Sections
+            modelBuilder.Entity<Author>()
+                        .HasIndex(s => s.StageName)
+                        .IsUnique();
+        }
+        public DbSet<Author> Authors { get; set; }
             public DbSet<GenderType> GenderTypes { get; set; }
             public DbSet<Playlist> Playlists { get; set; }
             public DbSet<User> Users { get; set; }
