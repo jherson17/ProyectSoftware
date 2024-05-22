@@ -23,6 +23,7 @@ namespace ProyectSoftware.Web
         {
             builder.Services.AddScoped<IAuthorsService, AuthorServices>();
             builder.Services.AddScoped<IUsersService, UserServices>();
+            builder.Services.AddScoped<IGenderTypesService, GenderTypeServices>();
 
             //helpers
         }
