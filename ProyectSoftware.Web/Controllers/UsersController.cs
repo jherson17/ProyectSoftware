@@ -4,6 +4,8 @@ using ProyectSoftware.Web.Data;
 using ProyectSoftware.Web.Services;
 using ProyectSoftware.Web.Core;
 using Microsoft.EntityFrameworkCore;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Identity;
 
 namespace ProyectSoftware.Web.Controllers
 {
@@ -11,12 +13,13 @@ namespace ProyectSoftware.Web.Controllers
     {
         private readonly DataContext _context;
         private readonly IUsersService _UserService;
+        private readonly INotyfService _notify;
 
-        public UsersController(DataContext context, IUsersService UserService/*, /*INotyfService notifyService*/)
+        public UsersController(DataContext context, IUsersService UserService, INotyfService notify)
         {
             _context = context;
             _UserService = UserService; // Asigna el servicio de autores recibido al campo privado.
-
+            _notify = notify;
         }
         [HttpGet]
         // Acción para mostrar la lista de autores.
@@ -29,6 +32,11 @@ namespace ProyectSoftware.Web.Controllers
 
             // Devuelve una vista pasando la lista de autores como modelo.
             return View(response.Result);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
         }
     }
 }
