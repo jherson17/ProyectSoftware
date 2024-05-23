@@ -1,18 +1,18 @@
+using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.EntityFrameworkCore;
+using ProyectSoftware.Web;
 using ProyectSoftware.Web.Data;
 
-var builder = WebApplication.CreateBuilder(args);
+
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();// Agrega servicios necesarios para admitir controladores y vistas MVC.
 
 
-builder.Services.AddDbContext<DataContext>(cfg =>
-{
-    cfg.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection"));// Configura Entity Framework Core para usar SQL Server como proveedor de base de datos y obtiene la cadena de conexión desde la configuración de la aplicación.
-});
+builder.AddCustomBuilderConfiguration();
 
-var app = builder.Build();// Construye la aplicación.
+WebApplication app = builder.Build();// Construye la aplicación.
 
 
 // Configure the HTTP request pipeline.
@@ -29,9 +29,13 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseRouting();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Dashboard}/{id?}");
+
+app.AddCustomConfiguration();
 
 app.Run();
