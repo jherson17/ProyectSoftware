@@ -52,5 +52,10 @@ namespace ProyectSoftware.Web.Controllers
             await _usersService.LogoutAsync();
             return RedirectToAction("Login");
         }
+        [HttpGet]
+        public IActionResult NotAuthorized()
+        {
+            return View();
+        }
     }
 }
