@@ -251,7 +251,7 @@ namespace ProyectSoftware.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permission");
+                    b.ToTable("Permissions");
                 });
 
             modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.Playlist", b =>

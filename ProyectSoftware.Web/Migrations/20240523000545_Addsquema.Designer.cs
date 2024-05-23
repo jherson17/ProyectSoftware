@@ -12,8 +12,8 @@ using ProyectSoftware.Web.Data;
 namespace ProyectSoftware.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240522232641_CreateDataBase")]
-    partial class CreateDataBase
+    [Migration("20240523000545_Addsquema")]
+    partial class Addsquema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -254,7 +254,7 @@ namespace ProyectSoftware.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permission");
+                    b.ToTable("Permissions");
                 });
 
             modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.Playlist", b =>

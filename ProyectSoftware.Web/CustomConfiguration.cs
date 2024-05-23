@@ -20,6 +20,7 @@ namespace ProyectSoftware.Web
             {
                 conf.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection"));// Configura Entity Framework Core para usar SQL Server como proveedor de base de datos y obtiene la cadena de conexión desde la configuración de la aplicación.
             });
+            builder.Services.AddHttpContextAccessor();
             AddServices(builder);
 
             // Identity and Access Managnet
@@ -65,6 +66,8 @@ namespace ProyectSoftware.Web
             builder.Services.AddScoped<IAuthorsService, AuthorServices>();
             builder.Services.AddScoped<IGenderTypesService, GenderTypeServices>();
             builder.Services.AddTransient<SeedDb>();
+            builder.Services.AddScoped<IUsersService, UsersServices>();
+
             //helpers
         }
 

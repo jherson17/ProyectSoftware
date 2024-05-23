@@ -81,6 +81,6 @@ namespace ProyectSoftware.Web.Data
   
             public DbSet<ProyectSoftwareRole> ProyectSoftwareRoles { get; set; }
             public DbSet<RolePermission> RolePermissions { get; set; }
-            public DbSet<Permission> Permission { get; set; }
+            public DbSet<Permission> Permissions { get; set; }
     }
 }

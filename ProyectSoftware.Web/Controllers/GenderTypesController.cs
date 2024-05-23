@@ -4,6 +4,7 @@ using ProyectSoftware.Web.Data;
 using ProyectSoftware.Web.Services;
 using ProyectSoftware.Web.Core;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using ProyectSoftware.Web.Core.Atributes;
 
 
 
@@ -24,6 +25,7 @@ namespace ProyectSoftware.Web.Controllers
         [HttpGet]
         // Acción para mostrar la lista de autores.
         //click derecho - añador vista (debe tener el mismo nombre)
+        [CustomAuthorizeAtributte(permission: "showSections", module: "GenderType")]
         public async Task<IActionResult> Index()
         {
 

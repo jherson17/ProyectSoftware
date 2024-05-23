@@ -6,9 +6,12 @@ using ProyectSoftware.Web.Services;
 using Microsoft.EntityFrameworkCore;
 using static System.Collections.Specialized.BitVector32;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
+using ProyectSoftware.Web.Core.Atributes;
 
 namespace ProyectSoftware.Web.Controllers
 {
+    [Authorize]
     public class AuthorsController : Controller
     {
         private readonly DataContext _context;
@@ -24,6 +27,7 @@ namespace ProyectSoftware.Web.Controllers
         [HttpGet]
         // Acción para mostrar la lista de autores.
         //click derecho - añador vista (debe tener el mismo nombre)
+        [CustomAuthorizeAtributte(permission: "showSections", module: "Authors")]
         public async Task<IActionResult> Index()
         {
             _notify.Success("Authors");
