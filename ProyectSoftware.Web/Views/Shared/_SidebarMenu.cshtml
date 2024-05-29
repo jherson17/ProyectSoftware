@@ -8,7 +8,7 @@
             <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Home"
                && ViewContext.RouteData.Values["Action"].ToString() == "Dashboard"
                ? "" : "collapsed")" asp-action="Dashboard" asp-controller="Home">
-                <i class="bi bi-grid"></i>
+                <i class="bi bi-puzzle"></i>
                 <span>Dashboard</span>
             </a>
 
@@ -21,7 +21,7 @@
                 <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Auhors"
                && ViewContext.RouteData.Values["Action"].ToString() == "Index"
                ? "" : "collapsed")" asp-controller="Authors" asp-action="Index">
-                    <i class="bi bi-grid"></i>
+                    <i class="bi bi-puzzle"></i>
                     <span>Author</span>
                 </a>
             </li>
@@ -33,7 +33,7 @@
                 <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "GenderTypes"
                && ViewContext.RouteData.Values["Action"].ToString() == "Index"
                ? "" : "collapsed")" asp-controller="GenderTypes" asp-action="Index">
-                    <i class="bi bi-grid"></i>
+                    <i class="bi bi-puzzle"></i>
                     <span>GenderType</span>
                 </a>
             </li>

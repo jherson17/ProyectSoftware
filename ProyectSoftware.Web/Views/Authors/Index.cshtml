@@ -17,12 +17,17 @@
 
 <section class="section dashboard">
     <div class="card">
-        <div class="card-header py-3">
-            <h3 class="m-0 font-weight-bold text-primary col-md-11">Author</h3>
-            <div>
-                <a asp-action="Create" class="btn btn-primary">New Author</a>
-            </div>
-        </div>
+        @if (await _usersService.CurrentUserIsAuthorizedAsync("createAuthors", "Authors"))
+        {
+           <div class="card-header py-3">
+                <h3 class="m-0 font-weight-bold text-primary col-md-11">Author</h3>
+                <div>
+                    <a asp-action="Create" class="btn btn-primary">New Author</a>
+                </div>
+            </div> 
+        }
+
+        
                     
                 <div class="card-body">
                     
@@ -43,14 +48,22 @@
                                     <td class="table-danger">@Html.DisplayFor(modelItem => @item.LastName)</td>
                                     <td class="table-warning">@Html.DisplayFor(modelItem => @item.StageName)</td>
                                 <td>
-                                <a class="btn btn-warning" asp-action="Edit" asp-route-stagename="@item.StageName"><i class="bi bi-pencil-fill"></i></a>
+                                @if (await _usersService.CurrentUserIsAuthorizedAsync("updateAuthors", "Authors"))
+                                {
+                                     <a class="btn btn-warning" asp-action="Edit" asp-route-stagename="@item.StageName"><i class="bi bi-pencil-fill"></i></a>
                                     @*  esta llamando a delete de controller *@
-                                <form asp-action="Delete" asp-route-stagename="@item.StageName" style="display:contents">
+                                }
+
+                               
+                                @if (await _usersService.CurrentUserIsAuthorizedAsync("deleteAuthors", "Authors"))
+                                {
+                                    <form asp-action="Delete" asp-route-stagename="@item.StageName" style="display:contents">
                                         <button asp-action="Delete"
                                             asp-route-stagename="@item.StageName" class="btn btn-sm btn-danger btnDelete">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </form>
+                                }
                                 </td>
                                 </tr>
                             }

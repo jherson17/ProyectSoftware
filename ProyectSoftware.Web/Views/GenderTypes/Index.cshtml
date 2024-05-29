@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<ProyectSoftware.Web.Data.Entities.GenderType>
+@inject ProyectSoftware.Web.Services.IUsersService _usersService
 
 @{
     ViewData["Title"] = "Index"; // Establece el título de la página.
@@ -17,12 +18,15 @@
 
 <section class="section dashboard">
     <div class="card">
-        <div class="card-header py-3">
-            <h3 class="m-0 font-weight-bold text-primary col-md-11">GenderType</h3>
-            <div>
-                <a asp-action="Create" class="btn btn-primary">New GenderType</a>
+        @if (await _usersService.CurrentUserIsAuthorizedAsync("CreateGenderTypes", "GenderTypes"))
+        {
+            <div class="card-header py-3">
+                <h3 class="m-0 font-weight-bold text-primary col-md-11">GenderType</h3>
+                <div>
+                    <a asp-action="Create" class="btn btn-primary">New GenderType</a>
+                </div>
             </div>
-      </div>
+        }
 
     <div class="card">
         <div class="card-body">
@@ -40,12 +44,21 @@
                         <tr class="table-secondary">
                             <td>@Html.DisplayNameFor(model => model.GenderName)</td>
                                 <td>
-                                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-fill"></i></a>
-                                    @*  esta llamando a delete de controller *@
-                                    <form asp-action="Delete" asp-route-id="@item.Id" style="display:contents">
-                                        <button  asp-action="Delete"
-                                        asp-route-id="@item.Id" class="btn btn-sm btn-danger btnDelete"><i class="bi bi-trash"></i></button>
-                                   </form>
+                                    @if (await _usersService.CurrentUserIsAuthorizedAsync("updateGenderTypes", "GenderTypes"))
+                                    {
+                                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-fill"></i></a>
+                                        @*  esta llamando a delete de controller *@
+                                    }
+                                    @if (await _usersService.CurrentUserIsAuthorizedAsync("deleteGenderTypes", "GenderTypes"))
+                                    {
+                                        <form asp-action="Delete" asp-route-id="@item.Id" style="display:contents">
+                                            <button asp-action="Delete"
+                                                    asp-route-id="@item.Id" class="btn btn-sm btn-danger btnDelete">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    }
+                                    
                               </td>
                         </tr>
                         
