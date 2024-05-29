@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using ProyectSoftware.Web.Data;
 using ProyectSoftware.Web.Data.Entities;
 using ProyectSoftware.Web.Data.Seeders;
+using ProyectSoftware.Web.Helpers;
 using ProyectSoftware.Web.Services;
 
 namespace ProyectSoftware.Web
@@ -63,12 +64,14 @@ namespace ProyectSoftware.Web
         }
         private static void AddServices(this WebApplicationBuilder builder)
         {
+            builder.Services.AddScoped<IRolesService, RolesService>();
             builder.Services.AddScoped<IAuthorsService, AuthorServices>();
             builder.Services.AddScoped<IGenderTypesService, GenderTypeServices>();
             builder.Services.AddTransient<SeedDb>();
             builder.Services.AddScoped<IUsersService, UsersServices>();
 
             //helpers
+            builder.Services.AddScoped<IConverterHelper, ConverterHelper>();
         }
 
         public static WebApplication AddCustomConfiguration(this WebApplication app)

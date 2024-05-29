@@ -2,6 +2,9 @@
 using Microsoft.VisualBasic;
 using ProyectSoftware.Web.Data.Entities;
 using ProyectSoftware.Web.Services;
+using ProyectSoftware.Web.Core;
+using Constants = ProyectSoftware.Web.Core.Constants;
+
 
 namespace ProyectSoftware.Web.Data.Seeders
 {
@@ -23,11 +26,11 @@ namespace ProyectSoftware.Web.Data.Seeders
         }
         private async Task AdministradorRoleAsync()
         {
-            ProyectSoftwareRole? tmp = await _context.ProyectSoftwareRoles.Where(ir => ir.Name == "Administrador").FirstOrDefaultAsync();
+            ProyectSoftwareRole? tmp = await _context.ProyectSoftwareRoles.Where(ir => ir.Name == Constants.SUPER_ADMIN_ROLE_NAME).FirstOrDefaultAsync();
 
             if (tmp == null)
             {
-                ProyectSoftwareRole role = new ProyectSoftwareRole { Name = "Administrador" };
+                ProyectSoftwareRole role = new ProyectSoftwareRole { Name = Constants.SUPER_ADMIN_ROLE_NAME };
                 _context.ProyectSoftwareRoles.Add(role);
                 await _context.SaveChangesAsync();
             }

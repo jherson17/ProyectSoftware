@@ -14,7 +14,8 @@
 
         </li><!-- End Dashboard Nav -->
         @if (await _usersService.CurrentUserIsAuthorizedAsync("showGenderTypes", "GenderTypes") 
-        || await _usersService.CurrentUserIsAuthorizedAsync("showGenderTypes", "GenderTypes"))
+        || await _usersService.CurrentUserIsAuthorizedAsync("showGenderTypes", "GenderTypes")
+        || await _usersService.CurrentUserIsAuthorizedAsync("showRoles", "Roles"))
         {
             <li class="nav-item">
                 <!-- creando una conexcion con author-->
@@ -35,6 +36,18 @@
                ? "" : "collapsed")" asp-controller="GenderTypes" asp-action="Index">
                     <i class="bi bi-puzzle"></i>
                     <span>GenderType</span>
+                </a>
+            </li>
+
+            <!-- End GenderTypes Nav -->
+
+            <li class="nav-item">
+                <!-- creando una conexcion con author-->
+                <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Roles"
+               && ViewContext.RouteData.Values["Action"].ToString() == "Index"
+               ? "" : "collapsed")" asp-controller="Roles" asp-action="Index">
+                    <i class="bi bi-puzzle"></i>
+                    <span>Roles</span>
                 </a>
             </li>
 
