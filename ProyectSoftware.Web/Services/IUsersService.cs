@@ -15,8 +15,9 @@ namespace ProyectSoftware.Web.Services
         Task<bool> CurrentUserIsAuthorizedAsync(string permission, string module);
 
         Task<string> GenerateEmailConfirmationTokenAsync(User user);
-
-
+        Task<bool> CheckPasswordAsync(User user, string password);
+        Task<string> GeneratePasswordResetTokenAsync(User user);
+        Task<IdentityResult> ResetPasswordAsync(User user, string resetToken, string newPassword);
         Task<User> GetUserAsync(string email);
 
         Task<SignInResult> LoginAsync(LoginDTO model);
@@ -91,6 +92,7 @@ namespace ProyectSoftware.Web.Services
         {
             return await _userManager.GenerateEmailConfirmationTokenAsync(user);
         }
+       
 
         public async Task<User> GetUserAsync(string email)
         {
@@ -112,6 +114,14 @@ namespace ProyectSoftware.Web.Services
         public async Task<IdentityResult> UpdateUserAsync(User user)
         {
             return await _userManager.UpdateAsync(user);
+        }
+        public async Task<string> GeneratePasswordResetTokenAsync(User user)
+        {
+            return await _userManager.GeneratePasswordResetTokenAsync(user);
+        }
+        public Task<IdentityResult> ResetPasswordAsync(User user, string resetToken, string newPassword)
+        {
+            return _userManager.ResetPasswordAsync(user, resetToken, newPassword);
         }
     }
 

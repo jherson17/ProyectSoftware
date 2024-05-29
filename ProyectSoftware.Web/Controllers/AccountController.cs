@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProyectSoftware.Web.Data.Entities;
 using ProyectSoftware.Web.DTOs;
@@ -10,7 +11,7 @@ namespace ProyectSoftware.Web.Controllers
 {
     public class AccountController : Controller
     {
-        //private readonly IConverterHelper _converterHelper;
+
         private readonly INotyfService _noty;
         private readonly IUsersService _usersService;
         private readonly IConverterHelper _converterHelper;
@@ -19,7 +20,7 @@ namespace ProyectSoftware.Web.Controllers
         {
             _usersService = usersService;
             _noty = noty;
-          
+            _converterHelper = converterHelper;
             
         }
 
@@ -100,6 +101,46 @@ namespace ProyectSoftware.Web.Controllers
 
             _noty.Error("Debe ajustar los errores de validación.");
             return View(dto);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword(ChangePasswordDTO dto)
+        {
+            if (ModelState.IsValid)
+            {
+                User user = await _usersService.GetUserAsync(User.Identity.Name);
+
+                bool isCorrectPassword = await _usersService.CheckPasswordAsync(user, dto.CurrentPassword);
+
+                if (!isCorrectPassword)
+                {
+                    _noty.Error("Contraseña incorrecta");
+                    return View();
+                }
+
+                string restToken = await _usersService.GeneratePasswordResetTokenAsync(user);
+                IdentityResult result = await _usersService.ResetPasswordAsync(user, restToken, dto.NewPassword);
+
+                if (result.Succeeded)
+                {
+                    _noty.Success("Contraseña actualizada con éxito");
+                    return RedirectToAction("Dashboard", "Home");
+                }
+
+                _noty.Error("Ha ocurriso un error, intentole nuevamente");
+                return View();
+            }
+
+            _noty.Error("Debe ajustar los errores de validación");
+            return View();
         }
     }
 }
