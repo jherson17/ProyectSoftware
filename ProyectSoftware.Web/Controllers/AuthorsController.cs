@@ -38,13 +38,14 @@ namespace ProyectSoftware.Web.Controllers
             // Devuelve una vista pasando la lista de autores como modelo.
             return View(response.Result);
         }
+        [HttpGet]
+        [CustomAuthorizeAtributte(permission: "createAuthors", module: "Authors")]
         public IActionResult Create()
         {
             return View();
         }
-        [HttpGet]
-        
         [HttpPost]
+        [CustomAuthorizeAtributte(permission: "createAuthors", module: "Authors")]
         public async Task<IActionResult> Create(Author model)
         {
             try
@@ -75,6 +76,7 @@ namespace ProyectSoftware.Web.Controllers
             return View();
         }
         [HttpGet("editstagename/{StageName}")]
+        [CustomAuthorizeAtributte(permission: "showAuthors", module: "Authors")]
         public async Task<IActionResult> Edit([FromRoute] string StageName)
         {
             Response<Author> response = await _AuthorService.GetOneAsync(StageName);
@@ -89,6 +91,7 @@ namespace ProyectSoftware.Web.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorizeAtributte(permission: "updateAuthors", module: "Authors")]
         public async Task<IActionResult> Update(Author model)
         {
             try
@@ -118,6 +121,7 @@ namespace ProyectSoftware.Web.Controllers
         }
 
         [HttpPost("deletebystagename/{StageName}")]//Cada httpos me toco cambiar la ruta preguntar al profe porque
+        [CustomAuthorizeAtributte(permission: "updateAuthors", module: "Authors")]
         public async Task<IActionResult> Delete([FromRoute] string StageName)
         {
             Response<Author> response = await _AuthorService.DeleteAsync(StageName);

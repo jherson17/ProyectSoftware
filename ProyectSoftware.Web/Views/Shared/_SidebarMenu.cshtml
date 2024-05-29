@@ -1,4 +1,5 @@
-﻿<aside id="sidebar" class="sidebar">
+﻿@inject ProyectSoftware.Web.Services.IUsersService _usersService
+<aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
@@ -12,36 +13,33 @@
             </a>
 
         </li><!-- End Dashboard Nav -->
-
-        <li class="nav-item">
-            <!-- creando una conexcion con author-->
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Auhors"
+        @if (await _usersService.CurrentUserIsAuthorizedAsync("showGenderTypes", "GenderTypes") 
+        || await _usersService.CurrentUserIsAuthorizedAsync("showGenderTypes", "GenderTypes"))
+        {
+            <li class="nav-item">
+                <!-- creando una conexcion con author-->
+                <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Auhors"
                && ViewContext.RouteData.Values["Action"].ToString() == "Index"
                ? "" : "collapsed")" asp-controller="Authors" asp-action="Index">
-                <i class="bi bi-grid"></i>
-                <span>Author</span>
-            </a>
-        </li><!-- End Author Nav -->
+                    <i class="bi bi-grid"></i>
+                    <span>Author</span>
+                </a>
+            </li>
 
-        <li class="nav-item">
-            <!-- creando una conexcion con author-->
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "GenderTypes"
+            <!-- End Author Nav -->
+
+            <li class="nav-item">
+                <!-- creando una conexcion con author-->
+                <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "GenderTypes"
                && ViewContext.RouteData.Values["Action"].ToString() == "Index"
                ? "" : "collapsed")" asp-controller="GenderTypes" asp-action="Index">
-                <i class="bi bi-grid"></i>
-                <span>GenderType</span>
-            </a>
-        </li><!-- End Dashboard Nav -->
+                    <i class="bi bi-grid"></i>
+                    <span>GenderType</span>
+                </a>
+            </li>
 
-        <li class="nav-item">
-            <!-- creando una conexcion con author-->
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Users"
-               && ViewContext.RouteData.Values["Action"].ToString() == "Index"
-               ? "" : "collapsed")" asp-controller="Users" asp-action="Index">
-                <i class="bi bi-grid"></i>
-                <span>User</span>
-            </a>
-        </li><!-- End Dashboard Nav -->
+            <!-- End Dashboard Nav -->
+        }
 
     </ul>
 
