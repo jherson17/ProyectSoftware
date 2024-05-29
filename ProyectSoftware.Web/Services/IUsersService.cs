@@ -22,6 +22,7 @@ namespace ProyectSoftware.Web.Services
         Task<SignInResult> LoginAsync(LoginDTO model);
 
         Task LogoutAsync();
+        Task<IdentityResult> UpdateUserAsync(User user);
 
 
     }
@@ -107,6 +108,10 @@ namespace ProyectSoftware.Web.Services
         public async Task LogoutAsync()
         {
             await _signInManager.SignOutAsync();
+        }
+        public async Task<IdentityResult> UpdateUserAsync(User user)
+        {
+            return await _userManager.UpdateAsync(user);
         }
     }
 
