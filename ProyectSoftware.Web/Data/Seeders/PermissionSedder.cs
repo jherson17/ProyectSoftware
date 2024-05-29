@@ -44,7 +44,7 @@ namespace ProyectSoftware.Web.Data.Seeders
 
             return list;
         }
-
+        //modificar
         private List<Permission> GenderTypes()
         {
             List<Permission> list = new List<Permission>
@@ -61,11 +61,13 @@ namespace ProyectSoftware.Web.Data.Seeders
         {
             List<Permission> list = new List<Permission>
             {
-                new Permission { Name = "showUsers", Description = "Ver Usuarios", Module = "Usuarios" },
+                
+                new Permission { Name = "showAuthores", Description = "Ver Usuarios", Module = "Authors" },
                 new Permission { Name = "createUsers", Description = "Crear Usuarios", Module = "Usuarios" },
                 new Permission { Name = "updateUsers", Description = "Editar Usuarios", Module = "Usuarios" },
                 new Permission { Name = "deleteUsers", Description = "Eliminar Usuarios", Module = "Usuarios" },
             };
+           
 
             return list;
         }
