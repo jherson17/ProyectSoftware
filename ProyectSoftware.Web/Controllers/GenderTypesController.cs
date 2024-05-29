@@ -35,11 +35,13 @@ namespace ProyectSoftware.Web.Controllers
             return View(response.Result);
         }
         [HttpGet]
+        [CustomAuthorizeAtributte(permission: "createGenderTypes", module: "Authors")]
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
+        [CustomAuthorizeAtributte(permission: "createGenderTypes", module: "Authors")]
         public async Task<IActionResult> Create(GenderType model)
         {
             try
@@ -70,6 +72,7 @@ namespace ProyectSoftware.Web.Controllers
             return View();
         }
         [HttpGet("{id}")]
+        [CustomAuthorizeAtributte(permission: "showGenderTypes", module: "Authors")]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
             Response<GenderType> response = await _GenderTypeService.GetOneAsync(id);
@@ -84,6 +87,7 @@ namespace ProyectSoftware.Web.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorizeAtributte(permission: "updateGenderTypes", module: "Authors")]
         public async Task<IActionResult> Update(GenderType model)
         {
             try
@@ -113,6 +117,7 @@ namespace ProyectSoftware.Web.Controllers
         }
 
         [HttpPost("{id}")]
+        [CustomAuthorizeAtributte(permission: "deleteGenderTypes", module: "Authors")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             Response<GenderType> response = await _GenderTypeService.DeleteAsync(id);

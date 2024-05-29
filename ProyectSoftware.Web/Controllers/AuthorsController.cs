@@ -27,7 +27,7 @@ namespace ProyectSoftware.Web.Controllers
         [HttpGet]
         // Acción para mostrar la lista de autores.
         //click derecho - añador vista (debe tener el mismo nombre)
-        [CustomAuthorizeAtributte(permission: "showSections", module: "Authors")]
+        [CustomAuthorizeAtributte(permission: "showAuthors", module: "Authors")]
         public async Task<IActionResult> Index()
         {
             _notify.Success("Authors");
