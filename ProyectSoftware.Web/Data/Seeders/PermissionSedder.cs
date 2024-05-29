@@ -13,12 +13,12 @@ namespace ProyectSoftware.Web.Data.Seeders
 
         public async Task SeedAsync()
         {
-            List<Permission> authorpermissions = Authors();
-            List<Permission> genertypepermissions = GenderTypes();
-            List<Permission> userpermissions = Users();
-            List<Permission> rolepermissions = Roles();
             List<Permission> permissions = new List<Permission>();
-           
+            permissions.AddRange(Roles());
+            permissions.AddRange(Users());
+            permissions.AddRange(GenderTypes());
+            permissions.AddRange(Authors());
+
 
             foreach (Permission permission in permissions)
             {
