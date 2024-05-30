@@ -140,6 +140,22 @@ namespace ProyectSoftware.Web.Controllers
             dto.Permissions = res2.Result.ToList();
             return View(dto);
         }
+
+        [HttpPost]
+        [CustomAuthorize("deleteRoles", "Roles")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            Response<object> response = await _rolesService.DeleteAsync(id);
+
+            if (!response.IsSuccess)
+            {
+                _notify.Error(response.Message);
+                return RedirectToAction(nameof(Index));
+            }
+
+            _notify.Success(response.Message);
+            return RedirectToAction(nameof(Index));
+        }
     }
 
 }

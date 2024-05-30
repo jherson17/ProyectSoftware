@@ -44,21 +44,25 @@
                             <tr class="table-secondary">
                                 <td>@item.Name</td>
                                 <td>
-                                    @if (await _usersService.CurrentUserIsAuthorizedAsync("updateRoles", "Roles"))
+                                    @if (item.Name != Constants.SUPER_ADMIN_ROLE_NAME)
                                     {
-                                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-fill"></i></a>
-                                        @*  esta llamando a delete de controller *@
-                                    }
-                                    @if (await _usersService.CurrentUserIsAuthorizedAsync("deleteRoles", "Roles"))
-                                    {
-                                        <form asp-action="Delete" asp-route-id="@item.Id" style="display:contents">
-                                            <button asp-action="Delete"
-                                                    asp-route-id="@item.Id" class="btn btn-sm btn-danger btnDelete">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </form>
-                                    }
+                                        @if (await _usersService.CurrentUserIsAuthorizedAsync("updateRoles", "Roles"))
+                                        {
+                                            <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-fill"></i></a>
+                                            @*  esta llamando a delete de controller *@
+                                        }
+                                        @if (await _usersService.CurrentUserIsAuthorizedAsync("deleteRoles", "Roles"))
+                                        {
+                                            <form asp-action="Delete" asp-route-id="@item.Id" style="display:contents">
+                                                <button asp-action="Delete"
+                                                        asp-route-id="@item.Id" class="btn btn-sm btn-danger btnDelete">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        }
 
+                                    }
+                                    
                                 </td>
                             </tr>
 

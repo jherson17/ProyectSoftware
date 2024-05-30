@@ -13,7 +13,7 @@ namespace ProyectSoftware.Web.Services
     public interface IRolesService
     {
         public Task<Response<ProyectSoftwareRole>> CreateAsync(ProyectSoftwareRoleDTO dto);
-
+        public Task<Response<object>> DeleteAsync(int id);
         public Task<Response<ProyectSoftwareRole>> EditAsync(ProyectSoftwareRoleDTO dto);
 
         //public Task<Response<PaginationResponse<ProyectSoftwareRole>>> GetListAsync(PaginationRequest request);
@@ -197,6 +197,59 @@ namespace ProyectSoftware.Web.Services
             catch (Exception ex)
             {
                 return ResponseHelper<IEnumerable<PermissionForDTO>>.MakeResponseFail(ex);
+            }
+        }
+
+        public async Task<Response<object>> DeleteAsync(int id)
+        {
+            try
+            {
+                Response<ProyectSoftwareRole> roleResponse = await GetOneModelAsync(id);
+
+                if (!roleResponse.IsSuccess)
+                {
+                    return ResponseHelper<object>.MakeResponseFail(roleResponse.Message);
+                }
+
+                if (roleResponse.Result.Name == Constants.SUPER_ADMIN_ROLE_NAME)
+                {
+                    return ResponseHelper<object>.MakeResponseFail($"El rol {Constants.SUPER_ADMIN_ROLE_NAME} no puede ser eliminado");
+                }
+
+                if (roleResponse.Result.Users.Count() > 0)
+                {
+                    return ResponseHelper<object>.MakeResponseFail($"El rol no puede ser eliminado debido a que tiene usuarios relacionados");
+                }
+
+                _context.ProyectSoftwareRoles.Remove(roleResponse.Result);
+                await _context.SaveChangesAsync();
+
+                return ResponseHelper<object>.MakeResponseSuccess("Rol eliminado con éxito");
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper<object>.MakeResponseFail(ex);
+            }
+        }
+
+        private async Task<Response<ProyectSoftwareRole>> GetOneModelAsync(int id)
+        {
+            try
+            {
+                ProyectSoftwareRole? role = await _context.ProyectSoftwareRoles.Include(r => r.Users)
+                                                                       .FirstOrDefaultAsync(r => r.Id == id);
+
+                if (role is null)
+                {
+                    return ResponseHelper<ProyectSoftwareRole>.MakeResponseFail($"El Rol con id '{id}' no existe");
+                }
+
+                return ResponseHelper<ProyectSoftwareRole>.MakeResponseSuccess(role);
+
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper<ProyectSoftwareRole>.MakeResponseFail(ex);
             }
         }
     }
