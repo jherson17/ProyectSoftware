@@ -4,10 +4,11 @@ using ProyectSoftware.Web.Data;
 using ProyectSoftware.Web.Data.Entities;
 using ProyectSoftware.Web.Services;
 using Microsoft.EntityFrameworkCore;
-using static System.Collections.Specialized.BitVector32;
+
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using ProyectSoftware.Web.Core.Atributes;
+using ProyectSoftware.Web.DTOs;
 
 namespace ProyectSoftware.Web.Controllers
 {
@@ -27,7 +28,7 @@ namespace ProyectSoftware.Web.Controllers
         [HttpGet]
         // Acción para mostrar la lista de autores.
         //click derecho - añador vista (debe tener el mismo nombre)
-        [CustomAuthorizeAtributte(permission: "showAuthors", module: "Authors")]
+        [CustomAuthorize(permission: "showAuthors", module: "Authors")]
         public async Task<IActionResult> Index()
         {
             _notify.Success("Authors");
@@ -39,13 +40,13 @@ namespace ProyectSoftware.Web.Controllers
             return View(response.Result);
         }
         [HttpGet]
-        [CustomAuthorizeAtributte(permission: "createAuthors", module: "Authors")]
+        [CustomAuthorize(permission: "createAuthors", module: "Authors")]
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
-        [CustomAuthorizeAtributte(permission: "createAuthors", module: "Authors")]
+        [CustomAuthorize(permission: "createAuthors", module: "Authors")]
         public async Task<IActionResult> Create(Author model)
         {
             try
@@ -76,7 +77,7 @@ namespace ProyectSoftware.Web.Controllers
             return View();
         }
         [HttpGet("editstagename/{StageName}")]
-        [CustomAuthorizeAtributte(permission: "showAuthors", module: "Authors")]
+        [CustomAuthorize(permission: "showAuthors", module: "Authors")]
         public async Task<IActionResult> Edit([FromRoute] string StageName)
         {
             Response<Author> response = await _AuthorService.GetOneAsync(StageName);
@@ -91,7 +92,7 @@ namespace ProyectSoftware.Web.Controllers
         }
 
         [HttpPost]
-        [CustomAuthorizeAtributte(permission: "updateAuthors", module: "Authors")]
+        [CustomAuthorize(permission: "updateAuthors", module: "Authors")]
         public async Task<IActionResult> Update(Author model)
         {
             try
@@ -120,11 +121,11 @@ namespace ProyectSoftware.Web.Controllers
             }
         }
 
-        [HttpPost("deletebystagename/{StageName}")]//Cada httpos me toco cambiar la ruta preguntar al profe porque
-        [CustomAuthorizeAtributte(permission: "updateAuthors", module: "Authors")]
-        public async Task<IActionResult> Delete([FromRoute] string StageName)
+        [HttpPost]//Cada httpos me toco cambiar la ruta preguntar al profe porque
+        [CustomAuthorize(permission: "updateAuthors", module: "Authors")]
+        public async Task<IActionResult> Delete(DeleteAuthorDTO dto)
         {
-            Response<Author> response = await _AuthorService.DeleteAsync(StageName);
+            Response<Author> response = await _AuthorService.DeleteAsync(dto.StageName);
 
             if (response.IsSuccess)
             {

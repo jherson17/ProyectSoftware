@@ -42,7 +42,7 @@
                     @foreach (var item in Model)
                     {
                         <tr class="table-secondary">
-                            <td>@Html.DisplayNameFor(model => model.GenderName)</td>
+                            <td>@item.GenderName</td>
                                 <td>
                                     @if (await _usersService.CurrentUserIsAuthorizedAsync("updateGenderTypes", "GenderTypes"))
                                     {

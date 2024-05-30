@@ -14,7 +14,7 @@
 
         </li><!-- End Dashboard Nav -->
         @if (await _usersService.CurrentUserIsAuthorizedAsync("showGenderTypes", "GenderTypes") 
-        || await _usersService.CurrentUserIsAuthorizedAsync("showGenderTypes", "GenderTypes")
+        || await _usersService.CurrentUserIsAuthorizedAsync("showAuthors", "Authors")
         || await _usersService.CurrentUserIsAuthorizedAsync("showRoles", "Roles"))
         {
             <li class="nav-item">

@@ -42,7 +42,7 @@
                         @foreach (var item in Model)
                         {
                             <tr class="table-secondary">
-                                <td>@Html.DisplayNameFor(model => model.Name)</td>
+                                <td>@item.Name</td>
                                 <td>
                                     @if (await _usersService.CurrentUserIsAuthorizedAsync("updateRoles", "Roles"))
                                     {

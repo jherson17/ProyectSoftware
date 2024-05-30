@@ -23,7 +23,7 @@ namespace ProyectSoftware.Web.Controllers
         [HttpGet]
         // Acción para mostrar la lista de autores.
         //click derecho - añador vista (debe tener el mismo nombre)
-        [CustomAuthorizeAtributte(permission: "showRoles", module: "Roles")]
+        [CustomAuthorize(permission: "showRoles", module: "Roles")]
         public async Task<IActionResult> Index()
         {
             // Obtiene la lista de autores de forma asincrónica desde el servicio de autores.
@@ -34,7 +34,7 @@ namespace ProyectSoftware.Web.Controllers
             return View(response.Result);
         }
         [HttpGet]
-        [CustomAuthorizeAtributte(permission: "createRoles", module: "Roles")]
+        [CustomAuthorize(permission: "createRoles", module: "Roles")]
         public async Task<IActionResult> Create()
         {
             Response<IEnumerable<Permission>> response = await _rolesService.GetPermissionsAsync();
@@ -59,7 +59,7 @@ namespace ProyectSoftware.Web.Controllers
         }
 
         [HttpPost]
-        [CustomAuthorizeAtributte(permission: "createRoles", module: "Roles")]
+        [CustomAuthorize(permission: "createRoles", module: "Roles")]
         public async Task<IActionResult> Create(ProyectSoftwareRoleDTO dto)
         {
             Response<IEnumerable<Permission>> permissionsResponse = await _rolesService.GetPermissionsAsync();
@@ -99,7 +99,7 @@ namespace ProyectSoftware.Web.Controllers
             return View(dto);
         }
         [HttpGet]
-        [CustomAuthorizeAtributte(permission: "updateRoles", module: "Roles")]
+        [CustomAuthorize(permission: "updateRoles", module: "Roles")]
         public async Task<IActionResult> Edit(int id)
         {
             Response<ProyectSoftwareRoleDTO> response = await _rolesService.GetOneAsync(id);
@@ -114,7 +114,7 @@ namespace ProyectSoftware.Web.Controllers
         }
 
         [HttpPost]
-        [CustomAuthorizeAtributte(permission: "updateRoles", module: "Roles")]
+        [CustomAuthorize(permission: "updateRoles", module: "Roles")]
         public async Task<IActionResult> Edit(ProyectSoftwareRoleDTO dto)
         {
             if (!ModelState.IsValid)

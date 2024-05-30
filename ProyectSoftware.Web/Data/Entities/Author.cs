@@ -15,5 +15,7 @@ namespace ProyectSoftware.Web.Data.Entities
         [Required(ErrorMessage = "El campo '{0}' es requerido.")]
         [MaxLength(64, ErrorMessage = "El campo '{0}' debe terner máximo {1} caractéres")]
         public string LastName { get; set; }
+
+        //public ICollection<Song> Songs { get; set; }
     }
 }

@@ -74,7 +74,6 @@ namespace ProyectSoftware.Web.Data.Seeders
         {
             List<Permission> list = new List<Permission>
             {
-                
                 new Permission { Name = "showAuthors", Description = "Ver Authors", Module = "Authors" },
                 new Permission { Name = "createAuthors", Description = "Crear Authors", Module = "Authors" },
                 new Permission { Name = "updateAuthors", Description = "Editar Authors", Module = "Authors" },
