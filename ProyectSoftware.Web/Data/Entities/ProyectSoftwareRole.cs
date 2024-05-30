@@ -11,6 +11,7 @@ namespace ProyectSoftware.Web.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Name { get; set; } = null!;
 
+        public IEnumerable<User> Users { get; set; }
         public ICollection<RolePermission> RolePermissions { get; set; }
     }
 }

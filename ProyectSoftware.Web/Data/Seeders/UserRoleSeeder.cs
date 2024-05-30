@@ -74,6 +74,11 @@ namespace ProyectSoftware.Web.Data.Seeders
 
                 _context.ProyectSoftwareRoles.Add(role);
 
+                ////posible solucion?
+                //List<Permission> permissions = await _context.Permissions.Where(p => p.Module == "Roles" ||
+                //                                                           p.Module == "Authors" ||
+                //                                                           p.Module == "GenderTypes").ToListAsync();
+
                 List<Permission> permissions = await _context.Permissions.Where(p => p.Module == "Secciones").ToListAsync();
 
                 foreach (Permission permission in permissions)
