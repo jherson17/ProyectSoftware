@@ -6,7 +6,6 @@
         @* se utiliza para determinar si una sección de la interfaz de usuario debe estar colapsada o no, dependiendo de la ruta actual (controlador y acción) *@
         <li class="nav-item">
             <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Home"
-               && ViewContext.RouteData.Values["Action"].ToString() == "Dashboard"
                ? "" : "collapsed")" asp-action="Dashboard" asp-controller="Home">
                 <i class="bi bi-puzzle"></i>
                 <span>Dashboard</span>
@@ -18,7 +17,6 @@
                 <li class="nav-item">
                     <!-- creando una conexcion con author-->
                     <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Auhors"
-                   && ViewContext.RouteData.Values["Action"].ToString() == "Index"
                    ? "" : "collapsed")" asp-controller="Authors" asp-action="Index">
                         <i class="bi bi-puzzle"></i>
                         <span>Author</span>
@@ -31,7 +29,6 @@
                 <li class="nav-item">
                     <!-- creando una conexcion con author-->
                     <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "GenderTypes"
-               && ViewContext.RouteData.Values["Action"].ToString() == "Index"
                ? "" : "collapsed")" asp-controller="GenderTypes" asp-action="Index">
                         <i class="bi bi-puzzle"></i>
                         <span>GenderType</span>
@@ -46,7 +43,6 @@
                 <li class="nav-item">
                     <!-- creando una conexcion con author-->
                     <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Roles"
-               && ViewContext.RouteData.Values["Action"].ToString() == "Index"
                ? "" : "collapsed")" asp-controller="Roles" asp-action="Index">
                         <i class="bi bi-puzzle"></i>
                         <span>Roles</span>
@@ -55,6 +51,20 @@
 
                 <!-- End Dashboard Nav -->
             }
+
+        @if (await _usersService.CurrentUserIsAuthorizedAsync("showUsers", "Users"))
+        {
+            <li class="nav-item">
+                <!-- creando una conexcion con author-->
+                <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Users"
+               ? "" : "collapsed")" asp-controller="Users" asp-action="Index">
+                    <i class="bi bi-puzzle"></i>
+                    <span>Users</span>
+                </a>
+            </li>
+
+            <!-- End Dashboard Nav -->
+        }
             
         
 

@@ -10,6 +10,7 @@ namespace ProyectSoftware.Web.Helpers
         public AccountUserDTO ToAccountDTO(User user);
         public ProyectSoftwareRole ToRole(ProyectSoftwareRoleDTO dto);
         public Task<ProyectSoftwareRoleDTO> ToRoleDTOAsync(ProyectSoftwareRole role);
+        public User ToUser(UserDTO dto);
     }
 
     public class ConverterHelper : IConverterHelper
@@ -58,6 +59,22 @@ namespace ProyectSoftware.Web.Helpers
                 Id = role.Id,
                 Name = role.Name,
                 Permissions = permissions,
+            };
+
+        }
+
+        public User ToUser(UserDTO dto)
+        {
+            return new User
+            {
+                Id = dto.Id.ToString(),
+                Document = dto.Document,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                Email = dto.Email,
+                UserName = dto.Email,
+                ProyectSoftwareRoleId = dto.ProyectSoftwareRoleId,
+                PhoneNumber = dto.PhoneNumber,
             };
         }
     }

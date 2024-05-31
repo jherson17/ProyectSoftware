@@ -72,6 +72,7 @@ namespace ProyectSoftware.Web
 
             //helpers
             builder.Services.AddScoped<IConverterHelper, ConverterHelper>();
+            builder.Services.AddScoped<ICombosHelper, CombosHelper>();
         }
 
         public static WebApplication AddCustomConfiguration(this WebApplication app)
