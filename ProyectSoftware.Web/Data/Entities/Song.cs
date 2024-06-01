@@ -12,7 +12,8 @@ namespace ProyectSoftware.Web.Data.Entities
      
         public ICollection<HasSongPlaylist> HasSongPlaylists { get; set; }
         public ICollection<HasSongGender> HasSongGenders { get; set; }
-        public Author Authors { get; set; }
+
+        public ICollection<UserSong> UserSongs { get; set; }
 
     }
 }

@@ -11,19 +11,6 @@
                 <span>Dashboard</span>
             </a>
 
-        </li><!-- End Dashboard Nav -->
-            @if (await _usersService.CurrentUserIsAuthorizedAsync("showAuthors", "Authors"))
-            {
-                <li class="nav-item">
-                    <!-- creando una conexcion con author-->
-                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Auhors"
-                   ? "" : "collapsed")" asp-controller="Authors" asp-action="Index">
-                        <i class="bi bi-puzzle"></i>
-                        <span>Author</span>
-                    </a>
-                </li>
-            }
-            <!-- End Author Nav -->
             @if (await _usersService.CurrentUserIsAuthorizedAsync("showGenderTypes", "GenderTypes"))
             {
                 <li class="nav-item">

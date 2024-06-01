@@ -20,12 +20,12 @@
 
 <section class="section dashboard">
     <div class="card">
-        @if (await _usersService.CurrentUserIsAuthorizedAsync("createRoles", "Roles"))
+        @if (await _usersService.CurrentUserIsAuthorizedAsync("createUsers", "Users"))
         {
             <div class="card-header py-3">
-                <h3 class="m-0 font-weight-bold text-primary col-md-11">Roles</h3>
+                <h3 class="m-0 font-weight-bold text-primary col-md-11">Users</h3>
                 <div>
-                    <a asp-action="Create" class="btn btn-primary">New Roles</a>
+                    <a asp-action="Create" class="btn btn-primary">New Users</a>
                 </div>
             </div>
         }

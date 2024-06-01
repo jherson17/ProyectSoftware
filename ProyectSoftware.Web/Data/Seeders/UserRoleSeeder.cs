@@ -50,7 +50,6 @@ namespace ProyectSoftware.Web.Data.Seeders
 
                 //posible solucion?
                 List<Permission> permissions = await _context.Permissions.Where(p => p.Module == "Roles" ||
-                                                                           p.Module == "Authors" ||
                                                                            p.Module == "GenderTypes").ToListAsync();
 
 

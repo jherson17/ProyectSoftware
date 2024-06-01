@@ -17,7 +17,7 @@ namespace ProyectSoftware.Web.Data.Seeders
             permissions.AddRange(Roles());
             permissions.AddRange(Users());
             permissions.AddRange(GenderTypes());
-            permissions.AddRange(Authors());
+            
 
 
             foreach (Permission permission in permissions)
@@ -70,18 +70,6 @@ namespace ProyectSoftware.Web.Data.Seeders
 
             return list;
         }
-        private List<Permission> Authors()
-        {
-            List<Permission> list = new List<Permission>
-            {
-                new Permission { Name = "showAuthors", Description = "Ver Authors", Module = "Authors" },
-                new Permission { Name = "createAuthors", Description = "Crear Authors", Module = "Authors" },
-                new Permission { Name = "updateAuthors", Description = "Editar Authors", Module = "Authors" },
-                new Permission { Name = "deleteAuthors", Description = "Eliminar Authors", Module = "Authors" },
-            };
-           
-
-            return list;
-        }
+        
     }
 }

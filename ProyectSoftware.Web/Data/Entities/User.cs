@@ -29,6 +29,7 @@ namespace ProyectSoftware.Web.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int ProyectSoftwareRoleId { get; set; }
 
+        public ICollection<UserSong> UserSongs { get; set; }
         public ProyectSoftwareRole ProyectSoftwareRole { get; set; } = null!;
 
 

@@ -155,30 +155,6 @@ namespace ProyectSoftware.Web.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.Author", b =>
-                {
-                    b.Property<string>("StageName")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.HasKey("StageName");
-
-                    b.HasIndex("StageName")
-                        .IsUnique();
-
-                    b.ToTable("Authors");
-                });
-
             modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.GenderType", b =>
                 {
                     b.Property<int>("Id")
@@ -325,9 +301,6 @@ namespace ProyectSoftware.Web.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AuthorsStageName")
-                        .HasColumnType("nvarchar(64)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -340,8 +313,6 @@ namespace ProyectSoftware.Web.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AuthorsStageName");
 
                     b.ToTable("Songs");
                 });
@@ -406,9 +377,6 @@ namespace ProyectSoftware.Web.Migrations
                     b.Property<string>("Photo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PrivateBlogRoleId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProyectSoftwareRoleId")
                         .HasColumnType("int");
 
@@ -424,6 +392,10 @@ namespace ProyectSoftware.Web.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -435,6 +407,21 @@ namespace ProyectSoftware.Web.Migrations
                     b.HasIndex("ProyectSoftwareRoleId");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.UserSong", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("SongId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "SongId");
+
+                    b.HasIndex("SongId");
+
+                    b.ToTable("UserSongs");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -545,24 +532,34 @@ namespace ProyectSoftware.Web.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.Song", b =>
-                {
-                    b.HasOne("ProyectSoftware.Web.Data.Entities.Author", "Authors")
-                        .WithMany()
-                        .HasForeignKey("AuthorsStageName");
-
-                    b.Navigation("Authors");
-                });
-
             modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.User", b =>
                 {
                     b.HasOne("ProyectSoftware.Web.Data.Entities.ProyectSoftwareRole", "ProyectSoftwareRole")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("ProyectSoftwareRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ProyectSoftwareRole");
+                });
+
+            modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.UserSong", b =>
+                {
+                    b.HasOne("ProyectSoftware.Web.Data.Entities.Song", "Song")
+                        .WithMany("UserSongs")
+                        .HasForeignKey("SongId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProyectSoftware.Web.Data.Entities.User", "User")
+                        .WithMany("UserSongs")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Song");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.GenderType", b =>
@@ -583,6 +580,8 @@ namespace ProyectSoftware.Web.Migrations
             modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.ProyectSoftwareRole", b =>
                 {
                     b.Navigation("RolePermissions");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.Song", b =>
@@ -590,6 +589,13 @@ namespace ProyectSoftware.Web.Migrations
                     b.Navigation("HasSongGenders");
 
                     b.Navigation("HasSongPlaylists");
+
+                    b.Navigation("UserSongs");
+                });
+
+            modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.User", b =>
+                {
+                    b.Navigation("UserSongs");
                 });
 #pragma warning restore 612, 618
         }

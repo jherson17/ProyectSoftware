@@ -65,7 +65,6 @@ namespace ProyectSoftware.Web
         private static void AddServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddScoped<IRolesService, RolesService>();
-            builder.Services.AddScoped<IAuthorsService, AuthorServices>();
             builder.Services.AddScoped<IGenderTypesService, GenderTypeServices>();
             builder.Services.AddTransient<SeedDb>();
             builder.Services.AddScoped<IUsersService, UsersServices>();
