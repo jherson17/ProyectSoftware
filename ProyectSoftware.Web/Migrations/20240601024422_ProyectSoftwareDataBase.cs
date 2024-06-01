@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProyectSoftware.Web.Migrations
 {
     /// <inheritdoc />
-    public partial class Addsquema : Migration
+    public partial class ProyectSoftwareDataBase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,19 +23,6 @@ namespace ProyectSoftware.Web.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Authors",
-                columns: table => new
-                {
-                    StageName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Authors", x => x.StageName);
                 });
 
             migrationBuilder.CreateTable(
@@ -95,6 +82,21 @@ namespace ProyectSoftware.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Songs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Duracion = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Songs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -116,27 +118,6 @@ namespace ProyectSoftware.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Songs",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Duracion = table.Column<int>(type: "int", nullable: false),
-                    AuthorsStageName = table.Column<string>(type: "nvarchar(64)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Songs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Songs_Authors_AuthorsStageName",
-                        column: x => x.AuthorsStageName,
-                        principalTable: "Authors",
-                        principalColumn: "StageName");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
@@ -145,7 +126,6 @@ namespace ProyectSoftware.Web.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Photo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PrivateBlogRoleId = table.Column<int>(type: "int", nullable: false),
                     ProyectSoftwareRoleId = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -330,6 +310,30 @@ namespace ProyectSoftware.Web.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserSongs",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SongId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserSongs", x => new { x.UserId, x.SongId });
+                    table.ForeignKey(
+                        name: "FK_UserSongs_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserSongs_Songs_SongId",
+                        column: x => x.SongId,
+                        principalTable: "Songs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -363,6 +367,13 @@ namespace ProyectSoftware.Web.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_Email",
+                table: "AspNetUsers",
+                column: "Email",
+                unique: true,
+                filter: "[Email] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_ProyectSoftwareRoleId",
                 table: "AspNetUsers",
                 column: "ProyectSoftwareRoleId");
@@ -373,12 +384,6 @@ namespace ProyectSoftware.Web.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Authors_StageName",
-                table: "Authors",
-                column: "StageName",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_HasSongPlaylists_IdSong",
@@ -402,9 +407,9 @@ namespace ProyectSoftware.Web.Migrations
                 column: "PermissionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Songs_AuthorsStageName",
-                table: "Songs",
-                column: "AuthorsStageName");
+                name: "IX_UserSongs_SongId",
+                table: "UserSongs",
+                column: "SongId");
         }
 
         /// <inheritdoc />
@@ -435,10 +440,10 @@ namespace ProyectSoftware.Web.Migrations
                 name: "RolePermissions");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "UserSongs");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Playlists");
@@ -447,16 +452,16 @@ namespace ProyectSoftware.Web.Migrations
                 name: "GenderTypes");
 
             migrationBuilder.DropTable(
-                name: "Songs");
-
-            migrationBuilder.DropTable(
                 name: "Permissions");
 
             migrationBuilder.DropTable(
-                name: "ProyectSoftwareRoles");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Authors");
+                name: "Songs");
+
+            migrationBuilder.DropTable(
+                name: "ProyectSoftwareRoles");
         }
     }
 }

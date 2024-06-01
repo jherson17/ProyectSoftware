@@ -1,17 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ProyectSoftware.Web.Data.Entities
+namespace ProyectSoftware.Web.DTOs
 {
-    public class ProyectSoftwareRole
+    public class ProyectSoftwareRoleDTO
     {
         public int Id { get; set; }
 
         [Display(Name = "Rol")]
         [MaxLength(64, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public string Name { get; set; } = null!;
+        public string Name { get; set; }
 
-        public IEnumerable<User> Users { get; set; }
-        public ICollection<RolePermission> RolePermissions { get; set; }
+        public List<PermissionForDTO>? Permissions { get; set; }
+
+        public string? PermissionIds { get; set; }
     }
 }

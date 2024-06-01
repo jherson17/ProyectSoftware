@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace ProyectSoftware.Web.Data.Entities
+namespace ProyectSoftware.Web.DTOs
 {
-    public class User : IdentityUser
+    public class AccountUserDTO
     {
+
+        public Guid Id { get; set; }
+
         [Display(Name = "Documento")]
         [MaxLength(32, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
@@ -20,18 +22,10 @@ namespace ProyectSoftware.Web.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string LastName { get; set; } = null!;
 
-        [Display(Name = "Foto")]
-        public string? Photo { get; set; }
-
-        [Display(Name = "Usuario")]
-        public string FullName => $"{FirstName} {LastName}";
-
+        [Display(Name = "Teléfono")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public int ProyectSoftwareRoleId { get; set; }
+        public string PhoneNumber { get; set; } = null!;
 
-        public ICollection<UserSong> UserSongs { get; set; }
-        public ProyectSoftwareRole ProyectSoftwareRole { get; set; } = null!;
-
-
+        public string Email { get; set; }
     }
 }

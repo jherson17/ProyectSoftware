@@ -4,9 +4,9 @@ using ProyectSoftware.Web.Services;
 
 namespace ProyectSoftware.Web.Core.Atributes
 {
-    public class CustomAuthorizeAtributte : TypeFilterAttribute
+    public class CustomAuthorizeAttribute : TypeFilterAttribute
     {
-        public CustomAuthorizeAtributte(string permission, string module) : base(typeof(CustomAuthorizeFilter))
+        public CustomAuthorizeAttribute(string permission, string module) : base(typeof(CustomAuthorizeFilter))
         {
             Arguments = new object[] { permission, module };
         }

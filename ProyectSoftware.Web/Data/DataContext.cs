@@ -24,6 +24,18 @@ namespace ProyectSoftware.Web.Data
 
             modelBuilder.Entity<RolePermission>()
                 .HasKey(ab => new { ab.RoleId, ab.PermissionId });
+            modelBuilder.Entity<UserSong>()
+                .HasKey(ab => new { ab.UserId, ab.SongId });
+
+
+            modelBuilder.Entity<UserSong>()
+               .HasOne(hsg => hsg.User)
+               .WithMany(s => s.UserSongs)
+               .HasForeignKey(hsg => hsg.UserId);
+            modelBuilder.Entity<UserSong>()
+               .HasOne(hsg => hsg.Song)
+               .WithMany(s => s.UserSongs)
+               .HasForeignKey(hsg => hsg.SongId);
 
             modelBuilder.Entity<RolePermission>()
                .HasOne(hsg => hsg.Permission)
@@ -64,21 +76,22 @@ namespace ProyectSoftware.Web.Data
         private void ConfigureIndexes(ModelBuilder modelBuilder)//index es una retriccion que tendra mi tabla de base de datos
         {
             // Sections
-            modelBuilder.Entity<Author>()
-                        .HasIndex(s => s.StageName)
-                        .IsUnique();
+            
             modelBuilder.Entity<ProyectSoftwareRole>()
                         .HasIndex(s => s.Name)
                         .IsUnique();
+            modelBuilder.Entity<User>()
+                        .HasIndex(s => s.Email)
+                        .IsUnique();
         }
-        public DbSet<Author> Authors { get; set; }
+        
             public DbSet<GenderType> GenderTypes { get; set; }
             public DbSet<Playlist> Playlists { get; set; }
             public DbSet<User> Users { get; set; }
             public DbSet<Song> Songs { get; set; }
             public DbSet<HasSongGender> HasSongsGenders { get; set; }
             public  DbSet<HasSongPlaylist> HasSongPlaylists { get; set; }
-  
+            public DbSet<UserSong> UserSongs { get; set; }
             public DbSet<ProyectSoftwareRole> ProyectSoftwareRoles { get; set; }
             public DbSet<RolePermission> RolePermissions { get; set; }
             public DbSet<Permission> Permissions { get; set; }

@@ -13,11 +13,12 @@ namespace ProyectSoftware.Web.Data.Seeders
 
         public async Task SeedAsync()
         {
-            List<Permission> authorpermissions = Authors();
-            List<Permission> genertypepermissions = GenderTypes();
-            List<Permission> userpermissions = Users();
             List<Permission> permissions = new List<Permission>();
-           
+            permissions.AddRange(Roles());
+            permissions.AddRange(Users());
+            permissions.AddRange(GenderTypes());
+            
+
 
             foreach (Permission permission in permissions)
             {
@@ -32,42 +33,43 @@ namespace ProyectSoftware.Web.Data.Seeders
             await _context.SaveChangesAsync();
         }
 
+        private List<Permission> Roles()
+        {
+            List<Permission> list = new List<Permission>
+            {
+                
+                new Permission { Name = "showRoles", Description = "Ver Roles", Module = "Roles" },
+                new Permission { Name = "createRoles", Description = "Crear Roles", Module = "Roles" },
+                new Permission { Name = "updateRoles", Description = "Editar Roles", Module = "Roles" },
+                new Permission { Name = "deleteRoles", Description = "Eliminar Roles", Module = "Roles" },
+            };
+            return list;
+        }
         private List<Permission> Users()
         {
             List<Permission> list = new List<Permission>
             {
-                new Permission { Name = "showSections", Description = "Ver Secciones", Module = "Secciones" },
-                new Permission { Name = "createSections", Description = "Crear Secciones", Module = "Secciones" },
-                new Permission { Name = "updateSections", Description = "Editar Secciones", Module = "Secciones" },
-                new Permission { Name = "deleteSections", Description = "Eliminar Secciones", Module = "Secciones" },
+                new Permission { Name = "showUsers", Description = "Ver Users", Module = "Users" },
+                new Permission { Name = "createUsers", Description = "Crear Users", Module = "Users" },
+                new Permission { Name = "updateUsers", Description = "Editar Users", Module = "Users" },
+                new Permission { Name = "deleteUsers", Description = "Eliminar Users", Module = "Users" },
             };
 
             return list;
         }
-
+       
         private List<Permission> GenderTypes()
         {
             List<Permission> list = new List<Permission>
             {
-                new Permission { Name = "showUsers", Description = "Ver Usuarios", Module = "Usuarios" },
-                new Permission { Name = "createUsers", Description = "Crear Usuarios", Module = "Usuarios" },
-                new Permission { Name = "updateUsers", Description = "Editar Usuarios", Module = "Usuarios" },
-                new Permission { Name = "deleteUsers", Description = "Eliminar Usuarios", Module = "Usuarios" },
+                new Permission { Name = "showGenderTypes", Description = "Ver GenderTypes", Module = "GenderTypes" },
+                new Permission { Name = "createGenderTypes", Description = "Crear GenderTypes", Module = "GenderTypes" },
+                new Permission { Name = "updateGenderTypes", Description = "Editar GenderTypes", Module = "GenderTypes" },
+                new Permission { Name = "deleteGenderTypes", Description = "Eliminar GenderTypes", Module = "GenderTypes" },
             };
 
             return list;
         }
-        private List<Permission> Authors()
-        {
-            List<Permission> list = new List<Permission>
-            {
-                new Permission { Name = "showUsers", Description = "Ver Usuarios", Module = "Usuarios" },
-                new Permission { Name = "createUsers", Description = "Crear Usuarios", Module = "Usuarios" },
-                new Permission { Name = "updateUsers", Description = "Editar Usuarios", Module = "Usuarios" },
-                new Permission { Name = "deleteUsers", Description = "Eliminar Usuarios", Module = "Usuarios" },
-            };
-
-            return list;
-        }
+        
     }
 }

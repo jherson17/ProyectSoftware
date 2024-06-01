@@ -2,6 +2,9 @@
 using Microsoft.VisualBasic;
 using ProyectSoftware.Web.Data.Entities;
 using ProyectSoftware.Web.Services;
+using ProyectSoftware.Web.Core;
+using Constants = ProyectSoftware.Web.Core.Constants;
+
 
 namespace ProyectSoftware.Web.Data.Seeders
 {
@@ -23,11 +26,11 @@ namespace ProyectSoftware.Web.Data.Seeders
         }
         private async Task AdministradorRoleAsync()
         {
-            ProyectSoftwareRole? tmp = await _context.ProyectSoftwareRoles.Where(ir => ir.Name == "Administrador").FirstOrDefaultAsync();
+            ProyectSoftwareRole? tmp = await _context.ProyectSoftwareRoles.Where(ir => ir.Name == Constants.SUPER_ADMIN_ROLE_NAME).FirstOrDefaultAsync();
 
             if (tmp == null)
             {
-                ProyectSoftwareRole role = new ProyectSoftwareRole { Name = "Administrador" };
+                ProyectSoftwareRole role = new ProyectSoftwareRole { Name = Constants.SUPER_ADMIN_ROLE_NAME };
                 _context.ProyectSoftwareRoles.Add(role);
                 await _context.SaveChangesAsync();
             }
@@ -45,7 +48,10 @@ namespace ProyectSoftware.Web.Data.Seeders
 
                 _context.ProyectSoftwareRoles.Add(role);
 
-                List<Permission> permissions = await _context.Permissions.Where(p => p.Module == "Secciones").ToListAsync();
+                //posible solucion?
+                List<Permission> permissions = await _context.Permissions.Where(p => p.Module == "Roles" ||
+                                                                           p.Module == "GenderTypes").ToListAsync();
+
 
                 foreach (Permission permission in permissions)
                 {
@@ -67,7 +73,12 @@ namespace ProyectSoftware.Web.Data.Seeders
 
                 _context.ProyectSoftwareRoles.Add(role);
 
-                List<Permission> permissions = await _context.Permissions.Where(p => p.Module == "Usuarios").ToListAsync();
+                ////posible solucion?
+                //List<Permission> permissions = await _context.Permissions.Where(p => p.Module == "Roles" ||
+                //                                                           p.Module == "Authors" ||
+                //                                                           p.Module == "GenderTypes").ToListAsync();
+
+                List<Permission> permissions = await _context.Permissions.Where(p => p.Module == "Secciones").ToListAsync();
 
                 foreach (Permission permission in permissions)
                 {

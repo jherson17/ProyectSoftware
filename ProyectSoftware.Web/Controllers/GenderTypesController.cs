@@ -25,7 +25,7 @@ namespace ProyectSoftware.Web.Controllers
         [HttpGet]
         // Acción para mostrar la lista de autores.
         //click derecho - añador vista (debe tener el mismo nombre)
-        [CustomAuthorizeAtributte(permission: "showSections", module: "GenderType")]
+        [CustomAuthorize(permission: "showSections", module: "GenderType")]
         public async Task<IActionResult> Index()
         {
 
@@ -35,11 +35,13 @@ namespace ProyectSoftware.Web.Controllers
             return View(response.Result);
         }
         [HttpGet]
+        [CustomAuthorize(permission: "createGenderTypes", module: "Authors")]
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
+        [CustomAuthorize(permission: "createGenderTypes", module: "Authors")]
         public async Task<IActionResult> Create(GenderType model)
         {
             try
@@ -69,7 +71,8 @@ namespace ProyectSoftware.Web.Controllers
             }
             return View();
         }
-        [HttpGet("{id}")]
+        [HttpGet]
+        [CustomAuthorize(permission: "showGenderTypes", module: "Authors")]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
             Response<GenderType> response = await _GenderTypeService.GetOneAsync(id);
@@ -84,7 +87,8 @@ namespace ProyectSoftware.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(GenderType model)
+        [CustomAuthorize(permission: "updateGenderTypes", module: "Authors")]
+        public async Task<IActionResult> Edit(GenderType model)
         {
             try
             {
@@ -112,7 +116,8 @@ namespace ProyectSoftware.Web.Controllers
             }
         }
 
-        [HttpPost("{id}")]
+        [HttpPost]
+        [CustomAuthorize(permission: "deleteGenderTypes", module: "Authors")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             Response<GenderType> response = await _GenderTypeService.DeleteAsync(id);

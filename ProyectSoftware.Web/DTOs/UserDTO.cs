@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
-namespace ProyectSoftware.Web.Data.Entities
+namespace ProyectSoftware.Web.DTOs
 {
-    public class User : IdentityUser
+    public class UserDTO
     {
+        public Guid Id { get; set; }
+
         [Display(Name = "Documento")]
         [MaxLength(32, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
@@ -20,18 +22,25 @@ namespace ProyectSoftware.Web.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string LastName { get; set; } = null!;
 
-        [Display(Name = "Foto")]
-        public string? Photo { get; set; }
+        public bool IsNew { get; set; }
 
-        [Display(Name = "Usuario")]
-        public string FullName => $"{FirstName} {LastName}";
-
+        [Display(Name = "Rol")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar un rol.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int ProyectSoftwareRoleId { get; set; }
 
-        public ICollection<UserSong> UserSongs { get; set; }
-        public ProyectSoftwareRole ProyectSoftwareRole { get; set; } = null!;
+        public IEnumerable<SelectListItem>? ProyectSoftwareRole { get; set; }
 
+        [Display(Name = "Teléfono")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public string PhoneNumber { get; set; } = null!;
 
+        [Display(Name = "Email")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [EmailAddress(ErrorMessage = "El campo {0} debe ser un Email válido")]
+        public string Email { get; set; } = null!;
+
+        [Display(Name = "Usuario")]
+        public string FullName => $"{FirstName} {LastName}";
     }
 }
