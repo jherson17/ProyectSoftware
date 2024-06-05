@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ProjectSoftware.Web.Data.Entities;
 using ProyectSoftware.Web.Data.Entities;
 using static System.Collections.Specialized.BitVector32;
 
@@ -61,13 +62,17 @@ namespace ProyectSoftware.Web.Data
                 .WithMany(s => s.HasSongPlaylists)
                 .HasForeignKey(hsg => hsg.IdSong);
 
-            modelBuilder.Entity<HasSongPlaylist>()
-                .HasOne(hsg => hsg.Playlist)
-                .WithMany(gt => gt.HasSongPlaylists)
-                .HasForeignKey(hsg => hsg.IdPlaylist);
+
+            modelBuilder.Entity<Playlist>()
+                .HasKey(p => p.Id);
+
+            modelBuilder.Entity<Song>()
+                .HasKey(s => s.Id);
+
+            base.OnModelCreating(modelBuilder);
 
 
-                ConfigureIndexes(modelBuilder);
+            ConfigureIndexes(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
         }

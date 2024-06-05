@@ -1,4 +1,6 @@
-﻿namespace ProyectSoftware.Web.Data.Entities
+﻿using ProjectSoftware.Web.Data.Entities;
+
+namespace ProyectSoftware.Web.Data.Entities
 {
     public class HasSongPlaylist
     {

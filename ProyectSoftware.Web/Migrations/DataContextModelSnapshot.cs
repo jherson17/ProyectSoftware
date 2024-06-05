@@ -17,7 +17,7 @@ namespace ProyectSoftware.Web.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -155,6 +155,23 @@ namespace ProyectSoftware.Web.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ProjectSoftware.Web.Data.Entities.Playlist", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Playlists");
+                });
+
             modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.GenderType", b =>
                 {
                     b.Property<int>("Id")
@@ -196,9 +213,14 @@ namespace ProyectSoftware.Web.Migrations
                     b.Property<int>("IdSong")
                         .HasColumnType("int");
 
+                    b.Property<int>("PlaylistId")
+                        .HasColumnType("int");
+
                     b.HasKey("IdPlaylist", "IdSong");
 
                     b.HasIndex("IdSong");
+
+                    b.HasIndex("PlaylistId");
 
                     b.ToTable("HasSongPlaylists");
                 });
@@ -228,33 +250,6 @@ namespace ProyectSoftware.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Permissions");
-                });
-
-            modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.Playlist", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Cantidad")
-                        .HasMaxLength(64)
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Playlists");
                 });
 
             modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.ProyectSoftwareRole", b =>
@@ -301,18 +296,28 @@ namespace ProyectSoftware.Web.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Artist")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Duracion")
+                    b.Property<string>("AudioUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PlaylistId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PlaylistId");
 
                     b.ToTable("Songs");
                 });
@@ -496,15 +501,15 @@ namespace ProyectSoftware.Web.Migrations
 
             modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.HasSongPlaylist", b =>
                 {
-                    b.HasOne("ProyectSoftware.Web.Data.Entities.Playlist", "Playlist")
-                        .WithMany("HasSongPlaylists")
-                        .HasForeignKey("IdPlaylist")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ProyectSoftware.Web.Data.Entities.Song", "Song")
                         .WithMany("HasSongPlaylists")
                         .HasForeignKey("IdSong")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProjectSoftware.Web.Data.Entities.Playlist", "Playlist")
+                        .WithMany()
+                        .HasForeignKey("PlaylistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -530,6 +535,13 @@ namespace ProyectSoftware.Web.Migrations
                     b.Navigation("Permission");
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.Song", b =>
+                {
+                    b.HasOne("ProjectSoftware.Web.Data.Entities.Playlist", null)
+                        .WithMany("Songs")
+                        .HasForeignKey("PlaylistId");
                 });
 
             modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.User", b =>
@@ -562,6 +574,11 @@ namespace ProyectSoftware.Web.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ProjectSoftware.Web.Data.Entities.Playlist", b =>
+                {
+                    b.Navigation("Songs");
+                });
+
             modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.GenderType", b =>
                 {
                     b.Navigation("HasSongGenders");
@@ -570,11 +587,6 @@ namespace ProyectSoftware.Web.Migrations
             modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.Permission", b =>
                 {
                     b.Navigation("RolePermissions");
-                });
-
-            modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.Playlist", b =>
-                {
-                    b.Navigation("HasSongPlaylists");
                 });
 
             modelBuilder.Entity("ProyectSoftware.Web.Data.Entities.ProyectSoftwareRole", b =>

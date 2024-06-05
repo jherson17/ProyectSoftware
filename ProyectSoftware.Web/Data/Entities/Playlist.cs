@@ -1,22 +1,26 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ProyectSoftware.Web.Data.Entities;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace ProyectSoftware.Web.Data.Entities
+namespace ProjectSoftware.Web.Data.Entities
 {
     public class Playlist
     {
         [Key]
         public int Id { get; set; }
-        [Display(Name = "User")]
-        [Required(ErrorMessage = "El campo '{0}' es requerido.")]
-        [MaxLength(64, ErrorMessage = "El campo '{0}' debe terner máximo {1} caractéres")]
         public string Name { get; set; }
-        [Required(ErrorMessage = "El campo '{0}' es requerido.")]
-        [MaxLength(64, ErrorMessage = "El campo '{0}' debe terner máximo {1} caractéres")]
-        public string Description { get; set; }
-        [Required(ErrorMessage = "El campo '{0}' es requerido.")]
-        [MaxLength(64, ErrorMessage = "El campo '{0}' debe terner máximo {1} caractéres")]
-        public int Cantidad { get; set;}
-      
-        public ICollection<HasSongPlaylist> HasSongPlaylists { get; set; }
+        public List<Song> Songs { get; set; }
+
+        public Playlist()
+        {
+            Songs = new List<Song>();
+        }
+
+        public Playlist(string name)
+        {
+            Name = name;
+            Songs = new List<Song>();
+        }
     }
 }
+
